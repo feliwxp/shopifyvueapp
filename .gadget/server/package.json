@@ -16,7 +16,7 @@
     "fastify": "^3.29.0",
     "@fastify/request-context": "3.0.0",
     "@types/node": "^16.11.7",
-    "@gadget-client/vueapp": "link:../client",
+    "@gadget-client/vueapp": "file:../client",
     "shopify-api-node": "*"
   },
   "devDependencies": {

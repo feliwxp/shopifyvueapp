@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "typescript": "^4.5.3",
-    "@gadget-client/vueapp": "link:.gadget/client",
-    "gadget-server": "link:.gadget/server",
+    "@gadget-client/vueapp": "file:.gadget/client",
+    "gadget-server": "file:.gadget/server",
     "vite": "^4.2.1",
     "@vitejs/plugin-react-swc": "3.2.0",
     "react": "^18.2.0",
