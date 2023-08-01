@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourcesContent": ["/**\n* This is the Gadget API client library for:\n*\n*  __     __                            \n*  \\ \\   / /   _  ___  __ _ _ __  _ __  \n*   \\ \\ / / | | |/ _ \\/ _` | '_ \\| '_ \\ \n*    \\ V /| |_| |  __/ (_| | |_) | |_) |\n*     \\_/  \\__,_|\\___|\\__,_| .__/| .__/ \n*                          |_|   |_|    \n*\n* Built for environment \"Development\" at version 9\n* API docs: https://docs.gadget.dev/api/vueapp\n* Edit this app here: https://vueapp.gadget.dev/edit\n*/\nexport {\n  GadgetConnection,\n  GadgetRecord,\n  GadgetRecordList,\n  GadgetInternalError,\n  GadgetClientError,\n  GadgetOperationError,\n  InvalidRecordError,\n  GadgetValidationError,\n  BrowserSessionStorageType\n} from \"@gadgetinc/api-client-core\";\n\nexport type { ClientOptions, BrowserSessionAuthenticationModeOptions, InvalidFieldError, AuthenticationModeOptions, Select } from \"@gadgetinc/api-client-core\";\n\nexport * from \"./Client.js\";\nexport * from \"./types.js\";\n\ndeclare global {\n  interface Window {\n    gadgetConfig: {\n      apiKeys: {\n        shopify: string;\n      };\n      environment: string;\n      env: Record<string, any>;\n    };\n  }\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAcA,6BAUO;AAIP,wBAAc,wBA5Bd;AA6BA,wBAAc,uBA7Bd;",
+  "names": []
+}
