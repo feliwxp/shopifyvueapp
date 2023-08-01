@@ -1,4 +1,4 @@
-import { Client } from "@gadget-client/pt-feli";
+import { Client } from "@gadget-client/vueapp";
 
 // export const api = new Client({ environment: window.gadgetConfig.environment });
 
@@ -10,5 +10,5 @@ import { Client } from "@gadget-client/pt-feli";
 
 export const api = new Client({
   environment: "development",
-  authenticationMode: { apiKey: "gsk-F33wTw4mJBiEe49Tpxw9U3VLwgVizZ9F" },
+  authenticationMode: { apiKey: "gsk-TPYahGNHd7mMVfFD2RyiQtjEYUGgARAY" },
 });

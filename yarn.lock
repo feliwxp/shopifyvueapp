@@ -1111,7 +1111,7 @@ functions-have-names@^1.2.3:
   version "1.9.0"
   dependencies:
     "@fastify/request-context" "3.0.0"
-    "@gadget-client/vueapp" "file:../../../../../Library/Caches/Yarn/v6/npm-gadget-server-1.9.0-6980672a-3594-4871-b5eb-ad36f914e7bb-1690881123241/node_modules/client"
+    "@gadget-client/vueapp" "file:../../../../../Library/Caches/Yarn/v6/npm-gadget-server-1.9.0-d14570b8-b369-475b-b078-aa981cd06c51-1690881383865/node_modules/client"
     "@gadgetinc/api-client-core" "0.14.0"
     "@types/node" "^16.11.7"
     fastify "^3.29.0"
