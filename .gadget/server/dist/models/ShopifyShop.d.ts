@@ -69,6 +69,7 @@ export type DefaultShopifyShopServerSelection = {
     readonly shopifyUpdatedAt: true;
     readonly weightUnit: true;
     readonly zipCode: true;
+    readonly donations: false;
 };
 /** All the data passed to an effect or precondition within the `install` action on the `shopifyShop` model. */
 export interface InstallShopifyShopActionContext extends AmbientContext {

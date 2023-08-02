@@ -9,6 +9,6 @@ import { Client } from "@gadget-client/vueapp";
 // });
 
 export const api = new Client({
-  environment: "development",
+  environment: process.env.NODE_ENV,
   authenticationMode: { apiKey: "gsk-TPYahGNHd7mMVfFD2RyiQtjEYUGgARAY" },
 });

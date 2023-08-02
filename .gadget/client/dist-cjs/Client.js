@@ -28,6 +28,8 @@ var import_ShopifyProduct = require("./models/ShopifyProduct.js");
 var import_ShopifyShop = require("./models/ShopifyShop.js");
 var import_ShopifySync = require("./models/ShopifySync.js");
 var import_SessionToken = require("./models/SessionToken.js");
+var import_Charity = require("./models/Charity.js");
+var import_Donation = require("./models/Donation.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
 var import_api_client_core2 = require("@gadgetinc/api-client-core");
 const productionEnv = "production";
@@ -96,6 +98,8 @@ class Client {
     this.shopifyShop = new import_ShopifyShop.ShopifyShopManager(this.connection);
     this.shopifySync = new import_ShopifySync.ShopifySyncManager(this.connection);
     this.sessionToken = new import_SessionToken.SessionTokenManager(this.connection);
+    this.charity = new import_Charity.CharityManager(this.connection);
+    this.donation = new import_Donation.DonationManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
     this.internal = {
       session: new import_api_client_core.InternalModelManager("session", this.connection, {
@@ -125,6 +129,16 @@ class Client {
       }),
       sessionToken: new import_api_client_core.InternalModelManager("sessionToken", this.connection, {
         pluralApiIdentifier: "sessionTokens",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      charity: new import_api_client_core.InternalModelManager("charity", this.connection, {
+        pluralApiIdentifier: "charities",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      donation: new import_api_client_core.InternalModelManager("donation", this.connection, {
+        pluralApiIdentifier: "donations",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })

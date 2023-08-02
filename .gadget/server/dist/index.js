@@ -33,6 +33,8 @@ __exportStar(require("./models/ShopifyProduct"), exports);
 __exportStar(require("./models/ShopifyShop"), exports);
 __exportStar(require("./models/ShopifySync"), exports);
 __exportStar(require("./models/SessionToken"), exports);
+__exportStar(require("./models/Charity"), exports);
+__exportStar(require("./models/Donation"), exports);
 __exportStar(require("./effects"), exports);
 /**
  * An instance of the Gadget logger

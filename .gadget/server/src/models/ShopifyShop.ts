@@ -70,6 +70,7 @@ export type DefaultShopifyShopServerSelection = {
       readonly shopifyUpdatedAt: true;
       readonly weightUnit: true;
       readonly zipCode: true;
+      readonly donations: false;
   };
 
   

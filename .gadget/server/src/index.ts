@@ -8,7 +8,7 @@
 *     \_/  \__,_|\___|\__,_| .__/| .__/ 
 *                          |_|   |_|    
 *
-* Built for environment `"Development"` at version "9"
+* Built for environment `"Development"` at version "125"
 * Edit this app here: https://"vueapp".gadget.dev/edit
 */
 import { FastifyLoggerInstance } from "fastify";
@@ -29,6 +29,8 @@ export * from "./models/ShopifyProduct";
 export * from "./models/ShopifyShop";
 export * from "./models/ShopifySync";
 export * from "./models/SessionToken";
+export * from "./models/Charity";
+export * from "./models/Donation";
 export * from "./effects";
 
 /**

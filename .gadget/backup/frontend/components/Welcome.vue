@@ -77,14 +77,15 @@ export default {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    console.log(process.env)
 
     // Logging all query parameters and their values
-    const queryParams = new URLSearchParams(location.search);
+    // const queryParams = new URLSearchParams(location.search);
 
-    queryParams.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
-    });
-    
+    // queryParams.forEach((value, key) => {
+    //   console.log(`${key}: ${value}`);
+    // });
+
   }
 }
 </script>
