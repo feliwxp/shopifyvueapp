@@ -8,7 +8,7 @@
 *     \_/  \__,_|\___|\__,_| .__/| .__/ 
 *                          |_|   |_|    
 *
-* Built for environment "Development" at version 260
+* Built for environment "Development" at version 533
 * API docs: https://docs.gadget.dev/api/vueapp
 * Edit this app here: https://vueapp.gadget.dev/edit
 */

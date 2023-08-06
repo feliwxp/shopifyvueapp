@@ -37,9 +37,9 @@ export interface DeleteDonationActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<DeleteDonationActionContext, "context">;
+    context: DeleteDonationActionContext;
 }
 /** All the data passed to an effect or precondition within the `create` action on the `donation` model. */
 export interface CreateDonationActionContext extends AmbientContext {
@@ -64,9 +64,9 @@ export interface CreateDonationActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<CreateDonationActionContext, "context">;
+    context: CreateDonationActionContext;
 }
 /** All the data passed to an effect or precondition within the `update` action on the `donation` model. */
 export interface UpdateDonationActionContext extends AmbientContext {
@@ -91,7 +91,7 @@ export interface UpdateDonationActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<UpdateDonationActionContext, "context">;
+    context: UpdateDonationActionContext;
 }

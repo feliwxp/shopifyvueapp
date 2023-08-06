@@ -1,14 +1,16 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import WelcomeNavBar from './components/NavBar/WelcomeNavBar.vue'
+// import WelcomeNavBar from './components/NavBar/WelcomeNavBar.vue'
 </script>
 
 <template>
   <AppProvider>
-    <WelcomeNavBar />
+    <!-- <WelcomeNavBar /> -->
     <RouterView v-slot="{ Component }">
       <transition name="fade" mode="out-in">
-        <component :is="Component"></component>
+        <component :is="Component">
+
+        </component>
       </transition>
     </RouterView>
   </AppProvider>

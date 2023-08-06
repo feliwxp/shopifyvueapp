@@ -50,9 +50,9 @@ export interface DeleteShopifyProductActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<DeleteShopifyProductActionContext, "context">;
+  context: DeleteShopifyProductActionContext;
 };
 
 
@@ -81,9 +81,9 @@ export interface UpdateShopifyProductActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<UpdateShopifyProductActionContext, "context">;
+  context: UpdateShopifyProductActionContext;
 };
 
 
@@ -112,9 +112,9 @@ export interface CreateShopifyProductActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<CreateShopifyProductActionContext, "context">;
+  context: CreateShopifyProductActionContext;
 };
 
 

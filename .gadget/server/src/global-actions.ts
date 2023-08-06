@@ -20,9 +20,9 @@ export interface GlobalShopifySyncGlobalActionContext extends AmbientContext {
   */
   trigger: ActionTrigger;
   /**
-  * The context of this global action
+  * The context of this global action. This context does not have a defined inner context.
   */
-  context: Omit<GlobalShopifySyncGlobalActionContext, "context">;
+  context: GlobalShopifySyncGlobalActionContext;
 };
 
 

@@ -1,6 +1,12 @@
 import type { RecordData } from "@gadgetinc/api-client-core";
 import { ChangeTracking, GadgetRecord } from "@gadgetinc/api-client-core";
-import { InternalError, InvalidActionInputError, MisconfiguredActionError, PermissionDeniedError } from "./errors";
+import {
+  InternalError,
+  InvalidActionInputError,
+  InvalidStateTransitionError,
+  MisconfiguredActionError,
+  PermissionDeniedError,
+} from "./errors";
 import { Globals, actionContextLocalStorage } from "./globals";
 import { modelListIndex, modelsMap } from "./metadata";
 import { AppTenancyKey } from "./tenancy";
@@ -108,6 +114,58 @@ export async function deleteRecord(record: GadgetRecord<any>) {
 
   await api.internal[model.apiIdentifier].delete(id);
   scope.recordDeleted = true;
+}
+
+export const ShopifyShopState = {
+  Installed: { created: "installed" },
+  Uninstalled: { created: "uninstalled" },
+};
+
+export const ShopifySyncState = {
+  Created: "created",
+  Running: "running",
+  Completed: "completed",
+  Errored: "errored",
+};
+
+export const ShopifyBulkOperationState = {
+  Created: "created",
+  Completed: "completed",
+  Canceled: "canceled",
+  Failed: "failed",
+  Expired: "expired",
+};
+
+export const ShopifySellingPlanGroupProductVariantState = {
+  Started: "started",
+  Created: "created",
+  Deleted: "deleted",
+};
+
+export const ShopifySellingPlanGroupProductState = {
+  Started: "started",
+  Created: "created",
+  Deleted: "deleted",
+};
+
+export function transitionState(
+  record: GadgetRecord<any>,
+  transition: {
+    from?: string | Record<string, string>;
+    to: string | Record<string, string>;
+  }
+) {
+  const stringRecordState = typeof record.state === "string" ? record.state : JSON.stringify(record.state);
+  const stringTransitionFrom = typeof transition.from === "string" ? transition.from : JSON.stringify(transition.from);
+
+  if (transition.from && stringRecordState !== stringTransitionFrom) {
+    throw new InvalidStateTransitionError(undefined, {
+      state: record.state,
+      expectedFrom: transition.from,
+    });
+  }
+
+  record.state = transition.to;
 }
 
 export async function shopifySync(params: AnyParams, record: GadgetRecord<any>) {

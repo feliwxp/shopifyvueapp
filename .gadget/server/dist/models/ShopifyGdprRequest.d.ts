@@ -35,9 +35,9 @@ export interface CreateShopifyGdprRequestActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<CreateShopifyGdprRequestActionContext, "context">;
+    context: CreateShopifyGdprRequestActionContext;
 }
 /** All the data passed to an effect or precondition within the `update` action on the `shopifyGdprRequest` model. */
 export interface UpdateShopifyGdprRequestActionContext extends AmbientContext {
@@ -62,7 +62,7 @@ export interface UpdateShopifyGdprRequestActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<UpdateShopifyGdprRequestActionContext, "context">;
+    context: UpdateShopifyGdprRequestActionContext;
 }

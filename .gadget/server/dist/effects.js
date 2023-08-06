@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FieldType = exports.globalShopifySync = exports.finishBulkOperation = exports.preventCrossShopDataAccess = exports.shopifySync = exports.deleteRecord = exports.save = exports.applyParams = exports.createGadgetRecord = void 0;
+exports.FieldType = exports.globalShopifySync = exports.finishBulkOperation = exports.preventCrossShopDataAccess = exports.shopifySync = exports.transitionState = exports.ShopifySellingPlanGroupProductState = exports.ShopifySellingPlanGroupProductVariantState = exports.ShopifyBulkOperationState = exports.ShopifySyncState = exports.ShopifyShopState = exports.deleteRecord = exports.save = exports.applyParams = exports.createGadgetRecord = void 0;
 const api_client_core_1 = require("@gadgetinc/api-client-core");
 const errors_1 = require("./errors");
 const globals_1 = require("./globals");
@@ -94,6 +94,45 @@ async function deleteRecord(record) {
     scope.recordDeleted = true;
 }
 exports.deleteRecord = deleteRecord;
+exports.ShopifyShopState = {
+    Installed: { created: "installed" },
+    Uninstalled: { created: "uninstalled" },
+};
+exports.ShopifySyncState = {
+    Created: "created",
+    Running: "running",
+    Completed: "completed",
+    Errored: "errored",
+};
+exports.ShopifyBulkOperationState = {
+    Created: "created",
+    Completed: "completed",
+    Canceled: "canceled",
+    Failed: "failed",
+    Expired: "expired",
+};
+exports.ShopifySellingPlanGroupProductVariantState = {
+    Started: "started",
+    Created: "created",
+    Deleted: "deleted",
+};
+exports.ShopifySellingPlanGroupProductState = {
+    Started: "started",
+    Created: "created",
+    Deleted: "deleted",
+};
+function transitionState(record, transition) {
+    const stringRecordState = typeof record.state === "string" ? record.state : JSON.stringify(record.state);
+    const stringTransitionFrom = typeof transition.from === "string" ? transition.from : JSON.stringify(transition.from);
+    if (transition.from && stringRecordState !== stringTransitionFrom) {
+        throw new errors_1.InvalidStateTransitionError(undefined, {
+            state: record.state,
+            expectedFrom: transition.from,
+        });
+    }
+    record.state = transition.to;
+}
+exports.transitionState = transitionState;
 async function shopifySync(params, record) {
     const context = getActionContextFromLocalStorage();
     const effectAPIs = context.effectAPIs;

@@ -27,7 +27,6 @@ var import_ShopifyGdprRequest = require("./models/ShopifyGdprRequest.js");
 var import_ShopifyProduct = require("./models/ShopifyProduct.js");
 var import_ShopifyShop = require("./models/ShopifyShop.js");
 var import_ShopifySync = require("./models/ShopifySync.js");
-var import_SessionToken = require("./models/SessionToken.js");
 var import_Charity = require("./models/Charity.js");
 var import_Donation = require("./models/Donation.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
@@ -97,7 +96,6 @@ class Client {
     this.shopifyProduct = new import_ShopifyProduct.ShopifyProductManager(this.connection);
     this.shopifyShop = new import_ShopifyShop.ShopifyShopManager(this.connection);
     this.shopifySync = new import_ShopifySync.ShopifySyncManager(this.connection);
-    this.sessionToken = new import_SessionToken.SessionTokenManager(this.connection);
     this.charity = new import_Charity.CharityManager(this.connection);
     this.donation = new import_Donation.DonationManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
@@ -124,11 +122,6 @@ class Client {
       }),
       shopifySync: new import_api_client_core.InternalModelManager("shopifySync", this.connection, {
         pluralApiIdentifier: "shopifySyncs",
-        // @ts-ignore
-        hasAmbiguousIdentifier: false
-      }),
-      sessionToken: new import_api_client_core.InternalModelManager("sessionToken", this.connection, {
-        pluralApiIdentifier: "sessionTokens",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       }),

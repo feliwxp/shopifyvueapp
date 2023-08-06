@@ -4,16 +4,8 @@
 */
 export interface AppConfiguration {
   /**
-* The value for the VUE_SHOPIFY_API_KEY set in the Gadget Environment Variables settings section. 
-*/
-  VUE_SHOPIFY_API_KEY: string;
-  /**
 * The value for the NODE_API set in the Gadget Environment Variables settings section. 
 */
   NODE_API: string;
-  /**
-* The value for the VUE_API set in the Gadget Environment Variables settings section. 
-*/
-  VUE_API: string;
 };
 

@@ -40,9 +40,9 @@ export interface RunShopifySyncActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<RunShopifySyncActionContext, "context">;
+    context: RunShopifySyncActionContext;
 }
 /** All the data passed to an effect or precondition within the `complete` action on the `shopifySync` model. */
 export interface CompleteShopifySyncActionContext extends AmbientContext {
@@ -67,9 +67,9 @@ export interface CompleteShopifySyncActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<CompleteShopifySyncActionContext, "context">;
+    context: CompleteShopifySyncActionContext;
 }
 /** All the data passed to an effect or precondition within the `error` action on the `shopifySync` model. */
 export interface ErrorShopifySyncActionContext extends AmbientContext {
@@ -94,7 +94,7 @@ export interface ErrorShopifySyncActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<ErrorShopifySyncActionContext, "context">;
+    context: ErrorShopifySyncActionContext;
 }

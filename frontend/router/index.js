@@ -12,14 +12,19 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/about",
-      name: "about",
-      component: () => import("../views/AboutView.vue"),
+      path: "/browse",
+      name: "browse",
+      component: () => import("../views/BrowseView.vue"),
     },
     {
-      path: "/exitiframe",
-      name: "exitiframe",
-      component: () => import("../views/ExitIframeView.vue"),
+      path: "/campaigns",
+      name: "campaigns",
+      component: () => import("../views/CampaignsView.vue"),
+    },
+    {
+      path: "/account",
+      name: "account",
+      component: () => import("../views/AccountView.vue"),
     },
   ],
 });

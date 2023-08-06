@@ -14,13 +14,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.actionContextLocalStorage = exports.Globals = exports.api = exports.logger = exports.setApiClient = exports.setLogger = void 0;
+exports.actionContextLocalStorage = exports.Globals = exports.api = exports.logger = exports.setApiClient = exports.setLogger = exports.InvalidStateTransitionError = void 0;
 __exportStar(require("./routes"), exports);
 __exportStar(require("./types"), exports);
 __exportStar(require("./AppConfiguration"), exports);
 __exportStar(require("./AppConnections"), exports);
 __exportStar(require("./global-actions"), exports);
 __exportStar(require("./AmbientContext"), exports);
+var errors_1 = require("./errors");
+Object.defineProperty(exports, "InvalidStateTransitionError", { enumerable: true, get: function () { return errors_1.InvalidStateTransitionError; } });
 /**
  * @internal
  */
@@ -32,7 +34,6 @@ __exportStar(require("./models/ShopifyGdprRequest"), exports);
 __exportStar(require("./models/ShopifyProduct"), exports);
 __exportStar(require("./models/ShopifyShop"), exports);
 __exportStar(require("./models/ShopifySync"), exports);
-__exportStar(require("./models/SessionToken"), exports);
 __exportStar(require("./models/Charity"), exports);
 __exportStar(require("./models/Donation"), exports);
 __exportStar(require("./effects"), exports);

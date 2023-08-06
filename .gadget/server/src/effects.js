@@ -14,6 +14,12 @@ _export(exports, {
     applyParams: ()=>applyParams,
     save: ()=>save,
     deleteRecord: ()=>deleteRecord,
+    ShopifyShopState: ()=>ShopifyShopState,
+    ShopifySyncState: ()=>ShopifySyncState,
+    ShopifyBulkOperationState: ()=>ShopifyBulkOperationState,
+    ShopifySellingPlanGroupProductVariantState: ()=>ShopifySellingPlanGroupProductVariantState,
+    ShopifySellingPlanGroupProductState: ()=>ShopifySellingPlanGroupProductState,
+    transitionState: ()=>transitionState,
     shopifySync: ()=>shopifySync,
     preventCrossShopDataAccess: ()=>preventCrossShopDataAccess,
     finishBulkOperation: ()=>finishBulkOperation,
@@ -94,6 +100,48 @@ async function deleteRecord(record) {
     }
     await api.internal[model.apiIdentifier].delete(id);
     scope.recordDeleted = true;
+}
+const ShopifyShopState = {
+    Installed: {
+        created: "installed"
+    },
+    Uninstalled: {
+        created: "uninstalled"
+    }
+};
+const ShopifySyncState = {
+    Created: "created",
+    Running: "running",
+    Completed: "completed",
+    Errored: "errored"
+};
+const ShopifyBulkOperationState = {
+    Created: "created",
+    Completed: "completed",
+    Canceled: "canceled",
+    Failed: "failed",
+    Expired: "expired"
+};
+const ShopifySellingPlanGroupProductVariantState = {
+    Started: "started",
+    Created: "created",
+    Deleted: "deleted"
+};
+const ShopifySellingPlanGroupProductState = {
+    Started: "started",
+    Created: "created",
+    Deleted: "deleted"
+};
+function transitionState(record, transition) {
+    const stringRecordState = typeof record.state === "string" ? record.state : JSON.stringify(record.state);
+    const stringTransitionFrom = typeof transition.from === "string" ? transition.from : JSON.stringify(transition.from);
+    if (transition.from && stringRecordState !== stringTransitionFrom) {
+        throw new _errors.InvalidStateTransitionError(undefined, {
+            state: record.state,
+            expectedFrom: transition.from
+        });
+    }
+    record.state = transition.to;
 }
 async function shopifySync(params, record) {
     const context = getActionContextFromLocalStorage();

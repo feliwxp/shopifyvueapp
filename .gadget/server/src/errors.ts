@@ -125,3 +125,9 @@ export class InvalidActionInputError extends errorClass("GGT_INVALID_ACTION_INPU
   causedByClient: true,
   causedByUserland: false,
 }) {}
+
+export class InvalidStateTransitionError extends errorClass("GGT_INVALID_STATE_TRANSITION" as const, "Invalid state transition", {
+  statusCode: 422,
+  causedByClient: false,
+  causedByUserland: true,
+}) {}

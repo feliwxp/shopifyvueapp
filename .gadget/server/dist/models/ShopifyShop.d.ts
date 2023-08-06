@@ -94,9 +94,9 @@ export interface InstallShopifyShopActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<InstallShopifyShopActionContext, "context">;
+    context: InstallShopifyShopActionContext;
 }
 /** All the data passed to an effect or precondition within the `update` action on the `shopifyShop` model. */
 export interface UpdateShopifyShopActionContext extends AmbientContext {
@@ -121,9 +121,9 @@ export interface UpdateShopifyShopActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<UpdateShopifyShopActionContext, "context">;
+    context: UpdateShopifyShopActionContext;
 }
 /** All the data passed to an effect or precondition within the `uninstall` action on the `shopifyShop` model. */
 export interface UninstallShopifyShopActionContext extends AmbientContext {
@@ -148,9 +148,9 @@ export interface UninstallShopifyShopActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<UninstallShopifyShopActionContext, "context">;
+    context: UninstallShopifyShopActionContext;
 }
 /** All the data passed to an effect or precondition within the `reinstall` action on the `shopifyShop` model. */
 export interface ReinstallShopifyShopActionContext extends AmbientContext {
@@ -175,7 +175,7 @@ export interface ReinstallShopifyShopActionContext extends AmbientContext {
         [key: string]: string | number | boolean | object | bigint | undefined;
     };
     /**
-    * The context of this action
+    * The context of this action. This context does not have a defined inner context.
     */
-    context: Omit<ReinstallShopifyShopActionContext, "context">;
+    context: ReinstallShopifyShopActionContext;
 }

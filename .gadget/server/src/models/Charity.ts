@@ -39,9 +39,9 @@ export interface CreateCharityActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<CreateCharityActionContext, "context">;
+  context: CreateCharityActionContext;
 };
 
 
@@ -70,9 +70,9 @@ export interface DeleteCharityActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<DeleteCharityActionContext, "context">;
+  context: DeleteCharityActionContext;
 };
 
 
@@ -101,9 +101,9 @@ export interface UpdateCharityActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<UpdateCharityActionContext, "context">;
+  context: UpdateCharityActionContext;
 };
 
 

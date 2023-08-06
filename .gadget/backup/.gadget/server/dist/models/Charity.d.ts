@@ -10,6 +10,7 @@ export type DefaultCharityServerSelection = {
     readonly name: true;
     readonly website_url: true;
     readonly donations: false;
+    readonly description: true;
 };
 /** All the data passed to an effect or precondition within the `create` action on the `charity` model. */
 export interface CreateCharityActionContext extends AmbientContext {

@@ -98,9 +98,9 @@ export interface InstallShopifyShopActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<InstallShopifyShopActionContext, "context">;
+  context: InstallShopifyShopActionContext;
 };
 
 
@@ -129,9 +129,9 @@ export interface UpdateShopifyShopActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<UpdateShopifyShopActionContext, "context">;
+  context: UpdateShopifyShopActionContext;
 };
 
 
@@ -160,9 +160,9 @@ export interface UninstallShopifyShopActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<UninstallShopifyShopActionContext, "context">;
+  context: UninstallShopifyShopActionContext;
 };
 
 
@@ -191,9 +191,9 @@ export interface ReinstallShopifyShopActionContext extends AmbientContext {
     [key: string]: string | number | boolean | object | bigint | undefined;
   };
   /**
-  * The context of this action
+  * The context of this action. This context does not have a defined inner context.
   */
-  context: Omit<ReinstallShopifyShopActionContext, "context">;
+  context: ReinstallShopifyShopActionContext;
 };
 
 

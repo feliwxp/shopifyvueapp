@@ -104,4 +104,25 @@ declare const InvalidActionInputError_base: {
 };
 export declare class InvalidActionInputError extends InvalidActionInputError_base {
 }
+declare const InvalidStateTransitionError_base: {
+    new (message?: string, details?: ErrorDetails | undefined): {
+        code: "GGT_INVALID_STATE_TRANSITION";
+        statusCode: any;
+        causedByClient: any;
+        causedByUserland: any;
+        logged: any;
+        exposeToClient: any;
+        exposeToSandbox: any;
+        /** JS classname of this error instance */
+        name: string;
+        /** Inner error which caused this error */
+        cause?: Error | undefined;
+        readonly details?: ErrorDetails | undefined;
+        message: string;
+        stack?: string | undefined;
+    };
+    code: "GGT_INVALID_STATE_TRANSITION";
+};
+export declare class InvalidStateTransitionError extends InvalidStateTransitionError_base {
+}
 export {};

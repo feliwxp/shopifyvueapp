@@ -7,9 +7,12 @@ export type DefaultDonationServerSelection = {
     readonly id: true;
     readonly createdAt: true;
     readonly updatedAt: true;
-    readonly charityIdId: true;
-    readonly charityId: false;
+    readonly charityId: true;
+    readonly charity: false;
     readonly amount: true;
+    readonly shopId: true;
+    readonly shop: false;
+    readonly type: true;
 };
 /** All the data passed to an effect or precondition within the `delete` action on the `donation` model. */
 export interface DeleteDonationActionContext extends AmbientContext {

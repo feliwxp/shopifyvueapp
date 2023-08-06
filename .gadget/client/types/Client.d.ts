@@ -7,7 +7,6 @@ import { ShopifyGdprRequestManager } from "./models/ShopifyGdprRequest.js";
 import { ShopifyProductManager } from "./models/ShopifyProduct.js";
 import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
-import { SessionTokenManager } from "./models/SessionToken.js";
 import { CharityManager } from "./models/Charity.js";
 import { DonationManager } from "./models/Donation.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
@@ -17,7 +16,6 @@ type InternalModelManagers = {
     shopifyProduct: InternalModelManager;
     shopifyShop: InternalModelManager;
     shopifySync: InternalModelManager;
-    sessionToken: InternalModelManager;
     charity: InternalModelManager;
     donation: InternalModelManager;
 };
@@ -34,7 +32,6 @@ export declare class Client implements AnyClient {
     shopifyProduct: ShopifyProductManager;
     shopifyShop: ShopifyShopManager;
     shopifySync: ShopifySyncManager;
-    sessionToken: SessionTokenManager;
     charity: CharityManager;
     donation: DonationManager;
     currentSession: CurrentSessionManager;

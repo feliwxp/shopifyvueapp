@@ -21,8 +21,6 @@ export type InternalShopifyProductRecord = Scalars["JSONObject"];
 export type InternalShopifyShopRecord = Scalars["JSONObject"];
 /** Represents one shopifySync result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalShopifySyncRecord = Scalars["JSONObject"];
-/** Represents one sessionToken result record in internal api calls. Returns a JSON blob of all the record's fields. */
-export type InternalSessionTokenRecord = Scalars["JSONObject"];
 /** Represents one charity result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalCharityRecord = Scalars["JSONObject"];
 /** Represents one donation result record in internal api calls. Returns a JSON blob of all the record's fields. */
@@ -222,7 +220,7 @@ export interface DonationFilter {
     id?: IDFilter | null;
     createdAt?: DateTimeFilter | null;
     updatedAt?: DateTimeFilter | null;
-    charityId?: IDFilter | null;
+    charity?: IDFilter | null;
     amount?: FloatFilter | null;
     shop?: IDFilter | null;
     type?: StringFilter | null;
@@ -431,25 +429,6 @@ export interface ShopifyShopFilter {
     weightUnit?: StringFilter | null;
     zipCode?: StringFilter | null;
 }
-export interface SessionTokenSort {
-    /** Sort the results by the id field. Defaults to ascending (smallest value first). */
-    id?: SortOrder | null;
-    /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
-    createdAt?: SortOrder | null;
-    /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
-    updatedAt?: SortOrder | null;
-    /** Sort the results by the token field. Defaults to ascending (smallest value first). */
-    token?: SortOrder | null;
-}
-export interface SessionTokenFilter {
-    AND?: (SessionTokenFilter | null)[];
-    OR?: (SessionTokenFilter | null)[];
-    NOT?: (SessionTokenFilter | null)[];
-    id?: IDFilter | null;
-    createdAt?: DateTimeFilter | null;
-    updatedAt?: DateTimeFilter | null;
-    token?: StringFilter | null;
-}
 export interface CharitySort {
     /** Sort the results by the id field. Defaults to ascending (smallest value first). */
     id?: SortOrder | null;
@@ -506,12 +485,6 @@ export interface ErrorShopifySyncInput {
     models?: (Scalars['JSON'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
 }
-export interface CreateSessionTokenInput {
-    token?: (Scalars['String'] | null) | null;
-}
-export interface UpdateSessionTokenInput {
-    token?: (Scalars['String'] | null) | null;
-}
 export interface CreateCharityInput {
     name?: (Scalars['String'] | null) | null;
     website_url?: (Scalars['String'] | null) | null;
@@ -526,7 +499,7 @@ export interface DonationHasManyInput {
     _converge?: ConvergeDonationInput | null;
 }
 export interface NestedDonationCreateInput {
-    charityId?: CharityBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
@@ -555,7 +528,7 @@ export interface NestedCharityDeleteInput {
     id: (Scalars['GadgetID'] | null);
 }
 export interface NestedDonationUpdateInput {
-    charityId?: CharityBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
@@ -572,7 +545,7 @@ export interface ConvergeDonationInput {
 }
 export interface ConvergeDonationValues {
     id?: (Scalars['GadgetID'] | null) | null;
-    charityId?: CharityBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
@@ -592,13 +565,13 @@ export interface UpdateCharityInput {
     description?: (Scalars['String'] | null) | null;
 }
 export interface CreateDonationInput {
-    charityId?: CharityBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
 }
 export interface UpdateDonationInput {
-    charityId?: CharityBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
@@ -746,14 +719,6 @@ export interface InternalShopifySyncInput {
     models?: (Scalars['JSON'] | null) | null;
     shop?: InternalBelongsToInput | null;
 }
-export interface InternalSessionTokenInput {
-    state?: (Scalars['RecordState'] | null) | null;
-    stateHistory?: (Scalars['RecordState'] | null) | null;
-    id?: (Scalars['GadgetID'] | null) | null;
-    createdAt?: Date | Scalars['ISO8601DateString'] | null;
-    updatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    token?: (Scalars['String'] | null) | null;
-}
 export interface InternalCharityInput {
     state?: (Scalars['RecordState'] | null) | null;
     stateHistory?: (Scalars['RecordState'] | null) | null;
@@ -770,7 +735,7 @@ export interface InternalDonationInput {
     id?: (Scalars['GadgetID'] | null) | null;
     createdAt?: Date | Scalars['ISO8601DateString'] | null;
     updatedAt?: Date | Scalars['ISO8601DateString'] | null;
-    charityId?: InternalBelongsToInput | null;
+    charity?: InternalBelongsToInput | null;
     amount?: (Scalars['Float'] | null) | null;
     shop?: InternalBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
@@ -1035,8 +1000,6 @@ export interface Query {
     shopifyShops: ShopifyShopConnection;
     shopifySync: (ShopifySync | null);
     shopifySyncs: ShopifySyncConnection;
-    sessionToken: (SessionToken | null);
-    sessionTokens: SessionTokenConnection;
     charity: (Charity | null);
     charities: CharityConnection;
     donation: (Donation | null);
@@ -1057,8 +1020,6 @@ export type AvailableQuerySelection = {
     shopifyShops?: AvailableShopifyShopConnectionSelection;
     shopifySync?: AvailableShopifySyncSelection;
     shopifySyncs?: AvailableShopifySyncConnectionSelection;
-    sessionToken?: AvailableSessionTokenSelection;
-    sessionTokens?: AvailableSessionTokenConnectionSelection;
     charity?: AvailableCharitySelection;
     charities?: AvailableCharityConnectionSelection;
     donation?: AvailableDonationSelection;
@@ -1539,8 +1500,8 @@ export interface Donation {
     createdAt: Scalars['DateTime'];
     /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
     updatedAt: Scalars['DateTime'];
-    charityId: Charity;
-    charityIdId: Scalars['GadgetID'];
+    charity: Charity;
+    charityId: Scalars['GadgetID'];
     amount: Scalars['Float'];
     shop: ShopifyShop;
     shopId: Scalars['GadgetID'];
@@ -1556,8 +1517,8 @@ export type AvailableDonationSelection = {
     createdAt?: boolean | null | undefined;
     /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
     updatedAt?: boolean | null | undefined;
-    charityId?: AvailableCharitySelection;
-    charityIdId?: boolean | null | undefined;
+    charity?: AvailableCharitySelection;
+    charityId?: boolean | null | undefined;
     amount?: boolean | null | undefined;
     shop?: AvailableShopifyShopSelection;
     shopId?: boolean | null | undefined;
@@ -1655,60 +1616,6 @@ export type AvailableShopifyShopEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
-export interface SessionToken {
-    __typename: 'SessionToken';
-    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-    id: Scalars['GadgetID'];
-    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-    createdAt: Scalars['DateTime'];
-    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-    updatedAt: Scalars['DateTime'];
-    token: (Scalars['String'] | null);
-    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-    _all: Scalars['JSONObject'];
-}
-export type AvailableSessionTokenSelection = {
-    __typename?: boolean | null | undefined;
-    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
-    id?: boolean | null | undefined;
-    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
-    createdAt?: boolean | null | undefined;
-    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
-    updatedAt?: boolean | null | undefined;
-    token?: boolean | null | undefined;
-    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
-    _all?: boolean | null | undefined;
-};
-/** A connection to a list of SessionToken items. */
-export interface SessionTokenConnection {
-    __typename: 'SessionTokenConnection';
-    /** A list of edges. */
-    edges: SessionTokenEdge[];
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-}
-export type AvailableSessionTokenConnectionSelection = {
-    __typename?: boolean | null | undefined;
-    /** A list of edges. */
-    edges?: AvailableSessionTokenEdgeSelection;
-    /** Information to aid in pagination. */
-    pageInfo?: AvailablePageInfoSelection;
-};
-/** An edge in a SessionToken connection. */
-export interface SessionTokenEdge {
-    __typename: 'SessionTokenEdge';
-    /** The item at the end of the edge */
-    node: SessionToken;
-    /** A cursor for use in pagination */
-    cursor: Scalars['String'];
-}
-export type AvailableSessionTokenEdgeSelection = {
-    __typename?: boolean | null | undefined;
-    /** The item at the end of the edge */
-    node?: AvailableSessionTokenSelection;
-    /** A cursor for use in pagination */
-    cursor?: boolean | null | undefined;
-};
 /** A connection to a list of Charity items. */
 export interface CharityConnection {
     __typename: 'CharityConnection';
@@ -1751,8 +1658,6 @@ export interface InternalQueries {
     listShopifyShop: InternalShopifyShopRecordConnection;
     shopifySync: (InternalShopifySyncRecord | null);
     listShopifySync: InternalShopifySyncRecordConnection;
-    sessionToken: (InternalSessionTokenRecord | null);
-    listSessionToken: InternalSessionTokenRecordConnection;
     charity: (InternalCharityRecord | null);
     listCharity: InternalCharityRecordConnection;
     donation: (InternalDonationRecord | null);
@@ -1772,8 +1677,6 @@ export type AvailableInternalQueriesSelection = {
     listShopifyShop?: AvailableInternalShopifyShopRecordConnectionSelection;
     shopifySync?: boolean | null | undefined;
     listShopifySync?: AvailableInternalShopifySyncRecordConnectionSelection;
-    sessionToken?: boolean | null | undefined;
-    listSessionToken?: AvailableInternalSessionTokenRecordConnectionSelection;
     charity?: boolean | null | undefined;
     listCharity?: AvailableInternalCharityRecordConnectionSelection;
     donation?: boolean | null | undefined;
@@ -1931,36 +1834,6 @@ export type AvailableInternalShopifySyncRecordEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
-/** A connection to a list of InternalSessionTokenRecord items. */
-export interface InternalSessionTokenRecordConnection {
-    __typename: 'InternalSessionTokenRecordConnection';
-    /** A list of edges. */
-    edges: InternalSessionTokenRecordEdge[];
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-}
-export type AvailableInternalSessionTokenRecordConnectionSelection = {
-    __typename?: boolean | null | undefined;
-    /** A list of edges. */
-    edges?: AvailableInternalSessionTokenRecordEdgeSelection;
-    /** Information to aid in pagination. */
-    pageInfo?: AvailablePageInfoSelection;
-};
-/** An edge in a InternalSessionTokenRecord connection. */
-export interface InternalSessionTokenRecordEdge {
-    __typename: 'InternalSessionTokenRecordEdge';
-    /** The item at the end of the edge */
-    node: InternalSessionTokenRecord;
-    /** A cursor for use in pagination */
-    cursor: Scalars['String'];
-}
-export type AvailableInternalSessionTokenRecordEdgeSelection = {
-    __typename?: boolean | null | undefined;
-    /** The item at the end of the edge */
-    node?: boolean | null | undefined;
-    /** A cursor for use in pagination */
-    cursor?: boolean | null | undefined;
-};
 /** A connection to a list of InternalCharityRecord items. */
 export interface InternalCharityRecordConnection {
     __typename: 'InternalCharityRecordConnection';
@@ -2103,10 +1976,6 @@ export interface Mutation {
     runShopifySync: (RunShopifySyncResult | null);
     completeShopifySync: (CompleteShopifySyncResult | null);
     errorShopifySync: (ErrorShopifySyncResult | null);
-    createSessionToken: (CreateSessionTokenResult | null);
-    updateSessionToken: (UpdateSessionTokenResult | null);
-    deleteSessionToken: (DeleteSessionTokenResult | null);
-    bulkDeleteSessionTokens: (BulkDeleteSessionTokensResult | null);
     createCharity: (CreateCharityResult | null);
     updateCharity: (UpdateCharityResult | null);
     deleteCharity: (DeleteCharityResult | null);
@@ -2123,10 +1992,6 @@ export type AvailableMutationSelection = {
     runShopifySync?: AvailableRunShopifySyncResultSelection;
     completeShopifySync?: AvailableCompleteShopifySyncResultSelection;
     errorShopifySync?: AvailableErrorShopifySyncResultSelection;
-    createSessionToken?: AvailableCreateSessionTokenResultSelection;
-    updateSessionToken?: AvailableUpdateSessionTokenResultSelection;
-    deleteSessionToken?: AvailableDeleteSessionTokenResultSelection;
-    bulkDeleteSessionTokens?: AvailableBulkDeleteSessionTokensResultSelection;
     createCharity?: AvailableCreateCharityResultSelection;
     updateCharity?: AvailableUpdateCharityResultSelection;
     deleteCharity?: AvailableDeleteCharityResultSelection;
@@ -2173,50 +2038,6 @@ export type AvailableErrorShopifySyncResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
     shopifySync?: AvailableShopifySyncSelection;
-};
-export interface CreateSessionTokenResult {
-    __typename: 'CreateSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionToken: (SessionToken | null);
-}
-export type AvailableCreateSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionToken?: AvailableSessionTokenSelection;
-};
-export interface UpdateSessionTokenResult {
-    __typename: 'UpdateSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionToken: (SessionToken | null);
-}
-export type AvailableUpdateSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionToken?: AvailableSessionTokenSelection;
-};
-export interface DeleteSessionTokenResult {
-    __typename: 'DeleteSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-}
-export type AvailableDeleteSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-};
-export interface BulkDeleteSessionTokensResult {
-    __typename: 'BulkDeleteSessionTokensResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-}
-export type AvailableBulkDeleteSessionTokensResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
 };
 export interface CreateCharityResult {
     __typename: 'CreateCharityResult';
@@ -2362,14 +2183,6 @@ export interface InternalMutations {
     triggerRunShopifySync: (RunShopifySyncResult | null);
     triggerCompleteShopifySync: (CompleteShopifySyncResult | null);
     triggerErrorShopifySync: (ErrorShopifySyncResult | null);
-    createSessionToken: (InternalCreateSessionTokenResult | null);
-    updateSessionToken: (InternalUpdateSessionTokenResult | null);
-    deleteSessionToken: (InternalDeleteSessionTokenResult | null);
-    deleteManySessionToken: (InternalDeleteManySessionTokenResult | null);
-    bulkCreateSessionTokens: (InternalBulkCreateSessionTokensResult | null);
-    triggerCreateSessionToken: (CreateSessionTokenResult | null);
-    triggerUpdateSessionToken: (UpdateSessionTokenResult | null);
-    triggerDeleteSessionToken: (DeleteSessionTokenResult | null);
     createCharity: (InternalCreateCharityResult | null);
     updateCharity: (InternalUpdateCharityResult | null);
     deleteCharity: (InternalDeleteCharityResult | null);
@@ -2432,14 +2245,6 @@ export type AvailableInternalMutationsSelection = {
     triggerRunShopifySync?: AvailableRunShopifySyncResultSelection;
     triggerCompleteShopifySync?: AvailableCompleteShopifySyncResultSelection;
     triggerErrorShopifySync?: AvailableErrorShopifySyncResultSelection;
-    createSessionToken?: AvailableInternalCreateSessionTokenResultSelection;
-    updateSessionToken?: AvailableInternalUpdateSessionTokenResultSelection;
-    deleteSessionToken?: AvailableInternalDeleteSessionTokenResultSelection;
-    deleteManySessionToken?: AvailableInternalDeleteManySessionTokenResultSelection;
-    bulkCreateSessionTokens?: AvailableInternalBulkCreateSessionTokensResultSelection;
-    triggerCreateSessionToken?: AvailableCreateSessionTokenResultSelection;
-    triggerUpdateSessionToken?: AvailableUpdateSessionTokenResultSelection;
-    triggerDeleteSessionToken?: AvailableDeleteSessionTokenResultSelection;
     createCharity?: AvailableInternalCreateCharityResultSelection;
     updateCharity?: AvailableInternalUpdateCharityResultSelection;
     deleteCharity?: AvailableInternalDeleteCharityResultSelection;
@@ -2867,64 +2672,6 @@ export type AvailableInternalBulkCreateShopifySyncsResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
     shopifySyncs?: boolean | null | undefined;
-};
-export interface InternalCreateSessionTokenResult {
-    __typename: 'InternalCreateSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionToken: (InternalSessionTokenRecord | null);
-}
-export type AvailableInternalCreateSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionToken?: boolean | null | undefined;
-};
-export interface InternalUpdateSessionTokenResult {
-    __typename: 'InternalUpdateSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionToken: (InternalSessionTokenRecord | null);
-}
-export type AvailableInternalUpdateSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionToken?: boolean | null | undefined;
-};
-export interface InternalDeleteSessionTokenResult {
-    __typename: 'InternalDeleteSessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionToken: (InternalSessionTokenRecord | null);
-}
-export type AvailableInternalDeleteSessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionToken?: boolean | null | undefined;
-};
-export interface InternalDeleteManySessionTokenResult {
-    __typename: 'InternalDeleteManySessionTokenResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-}
-export type AvailableInternalDeleteManySessionTokenResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-};
-export interface InternalBulkCreateSessionTokensResult {
-    __typename: 'InternalBulkCreateSessionTokensResult';
-    success: Scalars['Boolean'];
-    errors: ExecutionError[];
-    sessionTokens: (InternalSessionTokenRecord | null)[];
-}
-export type AvailableInternalBulkCreateSessionTokensResultSelection = {
-    __typename?: boolean | null | undefined;
-    success?: boolean | null | undefined;
-    errors?: AvailableExecutionErrorSelection;
-    sessionTokens?: boolean | null | undefined;
 };
 export interface InternalCreateCharityResult {
     __typename: 'InternalCreateCharityResult';

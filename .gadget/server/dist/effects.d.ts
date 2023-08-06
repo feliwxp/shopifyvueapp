@@ -28,6 +28,41 @@ export declare function save(record: GadgetRecord<any>): Promise<void>;
  * @param record - Record to delete from the database
  */
 export declare function deleteRecord(record: GadgetRecord<any>): Promise<void>;
+export declare const ShopifyShopState: {
+    Installed: {
+        created: string;
+    };
+    Uninstalled: {
+        created: string;
+    };
+};
+export declare const ShopifySyncState: {
+    Created: string;
+    Running: string;
+    Completed: string;
+    Errored: string;
+};
+export declare const ShopifyBulkOperationState: {
+    Created: string;
+    Completed: string;
+    Canceled: string;
+    Failed: string;
+    Expired: string;
+};
+export declare const ShopifySellingPlanGroupProductVariantState: {
+    Started: string;
+    Created: string;
+    Deleted: string;
+};
+export declare const ShopifySellingPlanGroupProductState: {
+    Started: string;
+    Created: string;
+    Deleted: string;
+};
+export declare function transitionState(record: GadgetRecord<any>, transition: {
+    from?: string | Record<string, string>;
+    to: string | Record<string, string>;
+}): void;
 export declare function shopifySync(params: AnyParams, record: GadgetRecord<any>): Promise<void>;
 /**
  * Enforce that the given record is only accessible by the current shop. For multi-tenant Shopify applications, this is key for enforcing data can only be accessed by the shop that owns it.

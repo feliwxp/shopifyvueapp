@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InvalidActionInputError = exports.InternalError = exports.MisconfiguredActionError = exports.PermissionDeniedError = void 0;
+exports.InvalidStateTransitionError = exports.InvalidActionInputError = exports.InternalError = exports.MisconfiguredActionError = exports.PermissionDeniedError = void 0;
 const utils_1 = require("./utils");
 /**
  * Parent class for all the enhanced errors in any gadget-owned package
@@ -90,4 +90,11 @@ class InvalidActionInputError extends errorClass("GGT_INVALID_ACTION_INPUT", "In
 }) {
 }
 exports.InvalidActionInputError = InvalidActionInputError;
+class InvalidStateTransitionError extends errorClass("GGT_INVALID_STATE_TRANSITION", "Invalid state transition", {
+    statusCode: 422,
+    causedByClient: false,
+    causedByUserland: true,
+}) {
+}
+exports.InvalidStateTransitionError = InvalidStateTransitionError;
 //# sourceMappingURL=errors.js.map

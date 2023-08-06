@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/vueapp",
-  "version": "1.260.0",
+  "version": "1.533.0",
   "files": [
     "dist-*/",
     "types",
@@ -30,6 +30,6 @@
   "gadget": {
     "applicationName": "Vueapp",
     "environmentName": "Development",
-    "environmentVersion": "260"
+    "environmentVersion": "533"
   }
 }

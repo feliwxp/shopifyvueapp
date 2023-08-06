@@ -15,19 +15,6 @@ window.__SHOPIFY_DEV_HOST = new URLSearchParams(location.search)
   .get("shop")
   .split(".")[0];
 
-// export const shopifyAppBridgePlugin = {
-//   install: (app) => {
-//     const appBridge = createApp({
-//       apiKey: window.gadgetConfig.apiKeys.shopify,
-//       host: window.__SHOPIFY_DEV_HOST,
-//       forceRedirect: true,
-//     });
-
-//     app.config.globalProperties.$appBridge = appBridge;
-//     app.provide("useAppBridge", appBridge);
-//   },
-// };
-
 export const appBridge = createApp({
   apiKey: window.gadgetConfig.apiKeys.shopify,
   host: window.__SHOPIFY_DEV_HOST,

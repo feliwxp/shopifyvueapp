@@ -16,8 +16,12 @@ export interface RequestDescription {
 /** A request instance, to query data on an incoming HTTP request. */
 export interface RouteContext<Description extends RequestDescription = RequestDescription> extends FastifyRequest<Description> {
     /** The current request's session, if it has one. Requests made by browsers are given sessions, but requests made using Gadget API Keys are not. */
-    applicationSession?: Session;
+    session?: Session;
     /** The current request's session ID, if it has one. Requests made by browsers are given sessions, but requests made using Gadget API Keys are not. */
+    sessionID?: string;
+    /** @deprecated Use session instead */
+    applicationSession?: Session;
+    /** @deprecated Use sessionID instead */
     applicationSessionID?: string;
     /** All Vueapp configuration values */
     config: AppConfiguration;

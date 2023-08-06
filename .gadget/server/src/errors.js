@@ -12,7 +12,8 @@ _export(exports, {
     PermissionDeniedError: ()=>PermissionDeniedError,
     MisconfiguredActionError: ()=>MisconfiguredActionError,
     InternalError: ()=>InternalError,
-    InvalidActionInputError: ()=>InvalidActionInputError
+    InvalidActionInputError: ()=>InvalidActionInputError,
+    InvalidStateTransitionError: ()=>InvalidStateTransitionError
 });
 const _utils = require("./utils");
 /**
@@ -98,5 +99,11 @@ class InvalidActionInputError extends errorClass("GGT_INVALID_ACTION_INPUT", "In
     statusCode: 422,
     causedByClient: true,
     causedByUserland: false
+}) {
+}
+class InvalidStateTransitionError extends errorClass("GGT_INVALID_STATE_TRANSITION", "Invalid state transition", {
+    statusCode: 422,
+    causedByClient: false,
+    causedByUserland: true
 }) {
 }
