@@ -157,10 +157,14 @@
     asynchronous-local-storage "^1.0.2"
     fastify-plugin "^3.0.0"
 
-"@gadget-client/vueapp@file:.gadget/client":
+"@gadget-client/vueapp@link:.gadget/client":
   version "1.125.0"
   dependencies:
     "@gadgetinc/api-client-core" "0.14.0"
+
+"@gadget-client/vueapp@link:.gadget/client":
+  version "0.0.0"
+  uid ""
 
 "@gadgetinc/api-client-core@0.14.0", "@gadgetinc/api-client-core@^0.14.0":
   version "0.14.0"
@@ -1099,11 +1103,11 @@ functions-have-names@^1.2.3:
   resolved "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-"gadget-server@file:.gadget/server":
+"gadget-server@link:.gadget/server":
   version "1.125.0"
   dependencies:
     "@fastify/request-context" "3.0.0"
-    "@gadget-client/vueapp" "file:../../../../../Library/Caches/Yarn/v6/npm-gadget-server-1.125.0-fc52ad63-ebc7-4a87-8d54-a869c11c4d6d-1690952295741/node_modules/client"
+    "@gadget-client/vueapp" "link:../../home/api/.cache/yarn/v6/npm-gadget-server-1.125.0-dff499e1-8071-4611-8384-bec089eafeb5-1690952382759/node_modules/client"
     "@gadgetinc/api-client-core" "0.14.0"
     "@types/node" "^16.11.7"
     fastify "^3.29.0"

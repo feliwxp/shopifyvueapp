@@ -45,56 +45,17 @@
       </p>
       <br />
       <h2>Total Products</h2>
-      <h3>{{ currentProductCount }}</h3>
+      <!-- <h3>{{ currentProductCount }}</h3> -->
       <div class="create-sample-product">
-        <button @click.prevent="addProducts" :disabled="buttonDisabled">
+        <!-- <button @click.prevent="addProducts" :disabled="buttonDisabled">
           Create Sample Products
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { Loading, Toast } from '@shopify/app-bridge/actions'
-import { useProductCounterStore } from '../../stores/counter'
-import { ref, inject, onMounted, computed } from 'vue'
-
-const appBridge = inject('useAppBridge')
-const buttonDisabled = ref(false)
-
-const currentProductCount = computed(() => {
-  return useProductCounterStore().count
-})
-
-const useToast = (message, isError = false) => {
-  const toast = Toast.create(appBridge, {
-    message: message,
-    duration: 3000,
-    isError: isError
-  })
-  toast.dispatch(Toast.Action.SHOW)
-}
-
-const addProducts = async () => {
-  await appBridge.dispatch(Loading.Action.START)
-  buttonDisabled.value = true
-  useToast('Creating products')
-  try {
-    await useProductCounterStore().createProducts()
-    useToast('Successfully created products')
-    buttonDisabled.value = false
-    await appBridge.dispatch(Loading.Action.STOP)
-  } catch (error) {
-    useToast('Error creating products', true)
-    buttonDisabled.value = false
-    await appBridge.dispatch(Loading.Action.STOP)
-  }
-}
-
-onMounted(() => {
-  useProductCounterStore().getProducts()
-})
 </script>
 
 <style scoped>

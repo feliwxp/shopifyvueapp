@@ -286,9 +286,9 @@ export interface DonationFilter {
   id?: IDFilter | null;
   createdAt?: DateTimeFilter | null;
   updatedAt?: DateTimeFilter | null;
-  charityId?: IDFilter | null;
+  charity?: IDFilter | null;
   amount?: FloatFilter | null;
-  shopId?: IDFilter | null;
+  shop?: IDFilter | null;
   type?: StringFilter | null;
 };
 
@@ -638,9 +638,9 @@ export interface DonationHasManyInput {
 
 
 export interface NestedDonationCreateInput {
-  charityId?: CharityBelongsToInput | null;
+  charity?: CharityBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: ShopifyShopBelongsToInput | null;
+  shop?: ShopifyShopBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
 };
 
@@ -682,9 +682,9 @@ export interface NestedCharityDeleteInput {
 
 
 export interface NestedDonationUpdateInput {
-  charityId?: CharityBelongsToInput | null;
+  charity?: CharityBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: ShopifyShopBelongsToInput | null;
+  shop?: ShopifyShopBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
   id: (Scalars['GadgetID'] | null);
 };
@@ -708,9 +708,9 @@ export interface ConvergeDonationInput {
 
 export interface ConvergeDonationValues {
   id?: (Scalars['GadgetID'] | null) | null;
-  charityId?: CharityBelongsToInput | null;
+  charity?: CharityBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: ShopifyShopBelongsToInput | null;
+  shop?: ShopifyShopBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
 };
 
@@ -737,18 +737,18 @@ export interface UpdateCharityInput {
 
 
 export interface CreateDonationInput {
-  charityId?: CharityBelongsToInput | null;
+  charity?: CharityBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: ShopifyShopBelongsToInput | null;
+  shop?: ShopifyShopBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
 };
 
 
 
 export interface UpdateDonationInput {
-  charityId?: CharityBelongsToInput | null;
+  charity?: CharityBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: ShopifyShopBelongsToInput | null;
+  shop?: ShopifyShopBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
 };
 
@@ -954,9 +954,9 @@ export interface InternalDonationInput {
   id?: (Scalars['GadgetID'] | null) | null;
   createdAt?: Date | Scalars['ISO8601DateString'] | null;
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
-  charityId?: InternalBelongsToInput | null;
+  charity?: InternalBelongsToInput | null;
   amount?: (Scalars['Float'] | null) | null;
-  shopId?: InternalBelongsToInput | null;
+  shop?: InternalBelongsToInput | null;
   type?: (Scalars['String'] | null) | null;
   /** An optional list of atomically applied commands for race-safe mutations of the record */
   _atomics?: InternalDonationAtomicsInput | null;
@@ -2111,11 +2111,11 @@ export interface Donation {
   createdAt: Scalars['DateTime'];
   /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
   updatedAt: Scalars['DateTime'];
-  charityId: Charity;
-  charityIdId: Scalars['GadgetID'];
+  charity: Charity;
+  charityId: Scalars['GadgetID'];
   amount: Scalars['Float'];
-  shopId: ShopifyShop;
-  shopIdId: Scalars['GadgetID'];
+  shop: ShopifyShop;
+  shopId: Scalars['GadgetID'];
   type: (Scalars['String'] | null);
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
@@ -2136,15 +2136,15 @@ export type AvailableDonationSelection = {
   /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
   updatedAt?: boolean | null | undefined;
 
-  charityId?: AvailableCharitySelection;
+  charity?: AvailableCharitySelection;
 
-  charityIdId?: boolean | null | undefined;
+  charityId?: boolean | null | undefined;
 
   amount?: boolean | null | undefined;
 
-  shopId?: AvailableShopifyShopSelection;
+  shop?: AvailableShopifyShopSelection;
 
-  shopIdId?: boolean | null | undefined;
+  shopId?: boolean | null | undefined;
 
   type?: boolean | null | undefined;
 

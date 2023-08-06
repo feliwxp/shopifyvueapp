@@ -69,9 +69,6 @@ export default {
       console.error('Error fetching data:', error);
     }
 
-    console.log(process.env.NODE_API)
-    console.log(process.env.NODE_ENV)
-
     // Logging all query parameters and their values
     // const queryParams = new URLSearchParams(location.search);
 

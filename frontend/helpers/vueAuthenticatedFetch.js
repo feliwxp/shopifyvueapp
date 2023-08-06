@@ -3,15 +3,10 @@ import { createApp } from "@shopify/app-bridge";
 import { Redirect } from "@shopify/app-bridge/actions";
 
 export function useAuthenticatedFetchVue() {
-  const host =
-    new URLSearchParams(location.search).get("host") ||
-    window.__SHOPIFY_DEV_HOST;
-
-  window.__SHOPIFY_DEV_HOST = host;
-  console.log(process.env.SHOPIFY_API_KEY);
+  console.log(window.__SHOPIFY_DEV_HOST);
   const appBridge = createApp({
-    apiKey: process.env.SHOPIFY_API_KEY,
-    host: host,
+    apiKey: window.gadgetConfig.apiKeys.shopify,
+    host: window.__SHOPIFY_DEV_HOST,
     forceRedirect: true,
   });
   const app = appBridge;

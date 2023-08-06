@@ -1,6 +1,6 @@
 {
   "name": "gadget-server",
-  "version": "1.125.0",
+  "version": "1.260.0",
   "files": [
     "dist/**/*"
   ],
@@ -16,7 +16,7 @@
     "fastify": "^3.29.0",
     "@fastify/request-context": "3.0.0",
     "@types/node": "^16.11.7",
-    "@gadget-client/vueapp": "file:../client",
+    "@gadget-client/vueapp": "link:../client",
     "shopify-api-node": "*"
   },
   "devDependencies": {
@@ -39,6 +39,6 @@
   "gadget": {
     "applicationName": "Vueapp",
     "environmentName": "Development",
-    "environmentVersion": "125"
+    "environmentVersion": "260"
   }
 }

@@ -5,7 +5,7 @@
   "description": "Internal package for Gadget app Vueapp (Development environment)",
   "license": "UNLICENSED",
   "dependencies": {
-    "@gadget-client/vueapp": "file:.gadget/client",
+    "@gadget-client/vueapp": "link:.gadget/client",
     "@gadgetinc/auth": "^0.3.1",
     "@gadgetinc/react": "^0.13.5",
     "@gadgetinc/react-shopify-app-bridge": "^0.11.0",
@@ -18,7 +18,7 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "3.2.0",
     "@vitejs/plugin-vue": "^4.2.3",
-    "gadget-server": "file:.gadget/server",
+    "gadget-server": "link:.gadget/server",
     "pinia": "^2.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
