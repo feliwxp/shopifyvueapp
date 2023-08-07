@@ -9,6 +9,8 @@ import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
 import { CharityManager } from "./models/Charity.js";
 import { DonationManager } from "./models/Donation.js";
+import { CauseManager } from "./models/Cause.js";
+import { CharitycauseManager } from "./models/Charitycause.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 type InternalModelManagers = {
     session: InternalModelManager;
@@ -18,6 +20,8 @@ type InternalModelManagers = {
     shopifySync: InternalModelManager;
     charity: InternalModelManager;
     donation: InternalModelManager;
+    cause: InternalModelManager;
+    charitycause: InternalModelManager;
 };
 type ClientOptions = Omit<ApiClientOptions, "environment"> & {
     environment?: string;
@@ -34,6 +38,8 @@ export declare class Client implements AnyClient {
     shopifySync: ShopifySyncManager;
     charity: CharityManager;
     donation: DonationManager;
+    cause: CauseManager;
+    charitycause: CharitycauseManager;
     currentSession: CurrentSessionManager;
     /**
     * Namespaced object for accessing models via the Gadget internal APIs, which provide lower level and higher privileged operations directly against the database. Useful for maintenance operations like migrations or correcting broken data, and for implementing the high level actions.

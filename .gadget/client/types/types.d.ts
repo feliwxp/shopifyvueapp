@@ -25,6 +25,10 @@ export type InternalShopifySyncRecord = Scalars["JSONObject"];
 export type InternalCharityRecord = Scalars["JSONObject"];
 /** Represents one donation result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalDonationRecord = Scalars["JSONObject"];
+/** Represents one cause result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalCauseRecord = Scalars["JSONObject"];
+/** Represents one charitycause result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalCharitycauseRecord = Scalars["JSONObject"];
 export interface ShopifyProductSort {
     /** Sort the results by the id field. Defaults to ascending (smallest value first). */
     id?: SortOrder | null;
@@ -454,6 +458,43 @@ export interface CharityFilter {
     website_url?: StringFilter | null;
     description?: StringFilter | null;
 }
+export interface CauseSort {
+    /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+    id?: SortOrder | null;
+    /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+    createdAt?: SortOrder | null;
+    /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+    updatedAt?: SortOrder | null;
+    /** Sort the results by the category field. Defaults to ascending (smallest value first). */
+    category?: SortOrder | null;
+}
+export interface CauseFilter {
+    AND?: (CauseFilter | null)[];
+    OR?: (CauseFilter | null)[];
+    NOT?: (CauseFilter | null)[];
+    id?: IDFilter | null;
+    createdAt?: DateTimeFilter | null;
+    updatedAt?: DateTimeFilter | null;
+    category?: StringFilter | null;
+}
+export interface CharitycauseSort {
+    /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+    id?: SortOrder | null;
+    /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+    createdAt?: SortOrder | null;
+    /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+    updatedAt?: SortOrder | null;
+}
+export interface CharitycauseFilter {
+    AND?: (CharitycauseFilter | null)[];
+    OR?: (CharitycauseFilter | null)[];
+    NOT?: (CharitycauseFilter | null)[];
+    id?: IDFilter | null;
+    createdAt?: DateTimeFilter | null;
+    updatedAt?: DateTimeFilter | null;
+    cause?: IDFilter | null;
+    charity?: IDFilter | null;
+}
 export interface RunShopifySyncInput {
     errorMessage?: (Scalars['String'] | null) | null;
     syncSince?: Date | Scalars['ISO8601DateString'] | null;
@@ -490,6 +531,9 @@ export interface CreateCharityInput {
     website_url?: (Scalars['String'] | null) | null;
     donations?: (DonationHasManyInput | null)[];
     description?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    causes?: (CauseHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
 }
 export interface DonationHasManyInput {
     create?: NestedDonationCreateInput | null;
@@ -516,16 +560,93 @@ export interface NestedCharityCreateInput {
     website_url?: (Scalars['String'] | null) | null;
     donations?: (DonationHasManyInput | null)[];
     description?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    causes?: (CauseHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+}
+export interface CharitycauseHasManyInput {
+    create?: NestedCharitycauseCreateInput | null;
+    update?: NestedCharitycauseUpdateInput | null;
+    delete?: NestedCharitycauseDeleteInput | null;
+    /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
+    _converge?: ConvergeCharitycauseInput | null;
+}
+export interface NestedCharitycauseCreateInput {
+    cause?: CauseBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
+}
+export interface CauseBelongsToInput {
+    create?: NestedCauseCreateInput | null;
+    update?: NestedCauseUpdateInput | null;
+    delete?: NestedCauseDeleteInput | null;
+    /** Existing ID of another record, which you would like to associate this record with */
+    _link?: (Scalars['GadgetID'] | null) | null;
+}
+export interface NestedCauseCreateInput {
+    category?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    charity?: (CharityHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+}
+export interface CharityHasManyThroughInput {
+    create?: NestedCharityCreateInput | null;
+    update?: NestedCharityUpdateInput | null;
+    delete?: NestedCharityDeleteInput | null;
 }
 export interface NestedCharityUpdateInput {
     name?: (Scalars['String'] | null) | null;
     website_url?: (Scalars['String'] | null) | null;
     donations?: (DonationHasManyInput | null)[];
     description?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    causes?: (CauseHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+    id: (Scalars['GadgetID'] | null);
+}
+export interface CauseHasManyThroughInput {
+    create?: NestedCauseCreateInput | null;
+    update?: NestedCauseUpdateInput | null;
+    delete?: NestedCauseDeleteInput | null;
+}
+export interface NestedCauseUpdateInput {
+    category?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    charity?: (CharityHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+    id: (Scalars['GadgetID'] | null);
+}
+export interface NestedCauseDeleteInput {
     id: (Scalars['GadgetID'] | null);
 }
 export interface NestedCharityDeleteInput {
     id: (Scalars['GadgetID'] | null);
+}
+export interface NestedCharitycauseUpdateInput {
+    cause?: CauseBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
+    id: (Scalars['GadgetID'] | null);
+}
+export interface NestedCharitycauseDeleteInput {
+    id: (Scalars['GadgetID'] | null);
+}
+export interface ConvergeCharitycauseInput {
+    /** The new list of records to converge to */
+    values: (ConvergeCharitycauseValues | null)[];
+    /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
+    actions?: ConvergeActionMap | null;
+}
+export interface ConvergeCharitycauseValues {
+    id?: (Scalars['GadgetID'] | null) | null;
+    cause?: CauseBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
+}
+export interface ConvergeActionMap {
+    /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
+    create?: (Scalars['String'] | null) | null;
+    /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
+    update?: (Scalars['String'] | null) | null;
+    /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
+    delete?: (Scalars['String'] | null) | null;
 }
 export interface NestedDonationUpdateInput {
     charity?: CharityBelongsToInput | null;
@@ -550,19 +671,14 @@ export interface ConvergeDonationValues {
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
 }
-export interface ConvergeActionMap {
-    /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
-    create?: (Scalars['String'] | null) | null;
-    /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
-    update?: (Scalars['String'] | null) | null;
-    /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
-    delete?: (Scalars['String'] | null) | null;
-}
 export interface UpdateCharityInput {
     name?: (Scalars['String'] | null) | null;
     website_url?: (Scalars['String'] | null) | null;
     donations?: (DonationHasManyInput | null)[];
     description?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    causes?: (CauseHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
 }
 export interface CreateDonationInput {
     charity?: CharityBelongsToInput | null;
@@ -575,6 +691,26 @@ export interface UpdateDonationInput {
     amount?: (Scalars['Float'] | null) | null;
     shop?: ShopifyShopBelongsToInput | null;
     type?: (Scalars['String'] | null) | null;
+}
+export interface CreateCauseInput {
+    category?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    charity?: (CharityHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+}
+export interface UpdateCauseInput {
+    category?: (Scalars['String'] | null) | null;
+    charitycauses?: (CharitycauseHasManyInput | null)[];
+    charity?: (CharityHasManyThroughInput | null)[];
+    charitycause?: (CharitycauseHasManyInput | null)[];
+}
+export interface CreateCharitycauseInput {
+    cause?: CauseBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
+}
+export interface UpdateCharitycauseInput {
+    cause?: CauseBelongsToInput | null;
+    charity?: CharityBelongsToInput | null;
 }
 export interface InternalSessionInput {
     state?: (Scalars['RecordState'] | null) | null;
@@ -745,6 +881,23 @@ export interface InternalDonationInput {
 export interface InternalDonationAtomicsInput {
     /** Numeric atomic commands for operating on amount. */
     amount?: (NumericAtomicFieldUpdateInput)[];
+}
+export interface InternalCauseInput {
+    state?: (Scalars['RecordState'] | null) | null;
+    stateHistory?: (Scalars['RecordState'] | null) | null;
+    id?: (Scalars['GadgetID'] | null) | null;
+    createdAt?: Date | Scalars['ISO8601DateString'] | null;
+    updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+    category?: (Scalars['String'] | null) | null;
+}
+export interface InternalCharitycauseInput {
+    state?: (Scalars['RecordState'] | null) | null;
+    stateHistory?: (Scalars['RecordState'] | null) | null;
+    id?: (Scalars['GadgetID'] | null) | null;
+    createdAt?: Date | Scalars['ISO8601DateString'] | null;
+    updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+    cause?: InternalBelongsToInput | null;
+    charity?: InternalBelongsToInput | null;
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
@@ -1004,6 +1157,10 @@ export interface Query {
     charities: CharityConnection;
     donation: (Donation | null);
     donations: DonationConnection;
+    cause: (Cause | null);
+    causes: CauseConnection;
+    charitycause: (Charitycause | null);
+    charitycauses: CharitycauseConnection;
     internal: (InternalQueries | null);
     currentSession: (Session | null);
     shopifyConnection: Shopify;
@@ -1024,6 +1181,10 @@ export type AvailableQuerySelection = {
     charities?: AvailableCharityConnectionSelection;
     donation?: AvailableDonationSelection;
     donations?: AvailableDonationConnectionSelection;
+    cause?: AvailableCauseSelection;
+    causes?: AvailableCauseConnectionSelection;
+    charitycause?: AvailableCharitycauseSelection;
+    charitycauses?: AvailableCharitycauseConnectionSelection;
     internal?: AvailableInternalQueriesSelection;
     currentSession?: AvailableSessionSelection;
     shopifyConnection?: AvailableShopifySelection;
@@ -1538,6 +1699,8 @@ export interface Charity {
     website_url: (Scalars['String'] | null);
     donations: DonationConnection;
     description: (Scalars['String'] | null);
+    causes: CauseConnection;
+    charitycauses: CharitycauseConnection;
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all: Scalars['JSONObject'];
 }
@@ -1553,6 +1716,156 @@ export type AvailableCharitySelection = {
     website_url?: boolean | null | undefined;
     donations?: AvailableDonationConnectionSelection;
     description?: boolean | null | undefined;
+    causes?: AvailableCauseConnectionSelection;
+    charitycauses?: AvailableCharitycauseConnectionSelection;
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all?: boolean | null | undefined;
+};
+/** A connection to a list of Cause items. */
+export interface CauseConnection {
+    __typename: 'CauseConnection';
+    /** A list of edges. */
+    edges: CauseEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableCauseConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableCauseEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a Cause connection. */
+export interface CauseEdge {
+    __typename: 'CauseEdge';
+    /** The item at the end of the edge */
+    node: Cause;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableCauseEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: AvailableCauseSelection;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
+export interface Cause {
+    __typename: 'Cause';
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id: Scalars['GadgetID'];
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt: Scalars['DateTime'];
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt: Scalars['DateTime'];
+    category: (Scalars['String'] | null);
+    charity: CharityConnection;
+    charitycauses: CharitycauseConnection;
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all: Scalars['JSONObject'];
+}
+export type AvailableCauseSelection = {
+    __typename?: boolean | null | undefined;
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id?: boolean | null | undefined;
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt?: boolean | null | undefined;
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt?: boolean | null | undefined;
+    category?: boolean | null | undefined;
+    charity?: AvailableCharityConnectionSelection;
+    charitycauses?: AvailableCharitycauseConnectionSelection;
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all?: boolean | null | undefined;
+};
+/** A connection to a list of Charity items. */
+export interface CharityConnection {
+    __typename: 'CharityConnection';
+    /** A list of edges. */
+    edges: CharityEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableCharityConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableCharityEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a Charity connection. */
+export interface CharityEdge {
+    __typename: 'CharityEdge';
+    /** The item at the end of the edge */
+    node: Charity;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableCharityEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: AvailableCharitySelection;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
+/** A connection to a list of Charitycause items. */
+export interface CharitycauseConnection {
+    __typename: 'CharitycauseConnection';
+    /** A list of edges. */
+    edges: CharitycauseEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableCharitycauseConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableCharitycauseEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a Charitycause connection. */
+export interface CharitycauseEdge {
+    __typename: 'CharitycauseEdge';
+    /** The item at the end of the edge */
+    node: Charitycause;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableCharitycauseEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: AvailableCharitycauseSelection;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
+export interface Charitycause {
+    __typename: 'Charitycause';
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id: Scalars['GadgetID'];
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt: Scalars['DateTime'];
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt: Scalars['DateTime'];
+    cause: (Cause | null);
+    causeId: (Scalars['GadgetID'] | null);
+    charity: (Charity | null);
+    charityId: (Scalars['GadgetID'] | null);
+    /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+    _all: Scalars['JSONObject'];
+}
+export type AvailableCharitycauseSelection = {
+    __typename?: boolean | null | undefined;
+    /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+    id?: boolean | null | undefined;
+    /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+    createdAt?: boolean | null | undefined;
+    /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+    updatedAt?: boolean | null | undefined;
+    cause?: AvailableCauseSelection;
+    causeId?: boolean | null | undefined;
+    charity?: AvailableCharitySelection;
+    charityId?: boolean | null | undefined;
     /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
     _all?: boolean | null | undefined;
 };
@@ -1616,36 +1929,6 @@ export type AvailableShopifyShopEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
-/** A connection to a list of Charity items. */
-export interface CharityConnection {
-    __typename: 'CharityConnection';
-    /** A list of edges. */
-    edges: CharityEdge[];
-    /** Information to aid in pagination. */
-    pageInfo: PageInfo;
-}
-export type AvailableCharityConnectionSelection = {
-    __typename?: boolean | null | undefined;
-    /** A list of edges. */
-    edges?: AvailableCharityEdgeSelection;
-    /** Information to aid in pagination. */
-    pageInfo?: AvailablePageInfoSelection;
-};
-/** An edge in a Charity connection. */
-export interface CharityEdge {
-    __typename: 'CharityEdge';
-    /** The item at the end of the edge */
-    node: Charity;
-    /** A cursor for use in pagination */
-    cursor: Scalars['String'];
-}
-export type AvailableCharityEdgeSelection = {
-    __typename?: boolean | null | undefined;
-    /** The item at the end of the edge */
-    node?: AvailableCharitySelection;
-    /** A cursor for use in pagination */
-    cursor?: boolean | null | undefined;
-};
 export interface InternalQueries {
     __typename: 'InternalQueries';
     session: (InternalSessionRecord | null);
@@ -1662,6 +1945,10 @@ export interface InternalQueries {
     listCharity: InternalCharityRecordConnection;
     donation: (InternalDonationRecord | null);
     listDonation: InternalDonationRecordConnection;
+    cause: (InternalCauseRecord | null);
+    listCause: InternalCauseRecordConnection;
+    charitycause: (InternalCharitycauseRecord | null);
+    listCharitycause: InternalCharitycauseRecordConnection;
     /** Currently open platform transaction details, or null if no transaction is open */
     currentTransactionDetails: (Scalars['JSONObject'] | null);
 }
@@ -1681,6 +1968,10 @@ export type AvailableInternalQueriesSelection = {
     listCharity?: AvailableInternalCharityRecordConnectionSelection;
     donation?: boolean | null | undefined;
     listDonation?: AvailableInternalDonationRecordConnectionSelection;
+    cause?: boolean | null | undefined;
+    listCause?: AvailableInternalCauseRecordConnectionSelection;
+    charitycause?: boolean | null | undefined;
+    listCharitycause?: AvailableInternalCharitycauseRecordConnectionSelection;
     /** Currently open platform transaction details, or null if no transaction is open */
     currentTransactionDetails?: boolean | null | undefined;
 };
@@ -1894,6 +2185,66 @@ export type AvailableInternalDonationRecordEdgeSelection = {
     /** A cursor for use in pagination */
     cursor?: boolean | null | undefined;
 };
+/** A connection to a list of InternalCauseRecord items. */
+export interface InternalCauseRecordConnection {
+    __typename: 'InternalCauseRecordConnection';
+    /** A list of edges. */
+    edges: InternalCauseRecordEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableInternalCauseRecordConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableInternalCauseRecordEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a InternalCauseRecord connection. */
+export interface InternalCauseRecordEdge {
+    __typename: 'InternalCauseRecordEdge';
+    /** The item at the end of the edge */
+    node: InternalCauseRecord;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableInternalCauseRecordEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: boolean | null | undefined;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
+/** A connection to a list of InternalCharitycauseRecord items. */
+export interface InternalCharitycauseRecordConnection {
+    __typename: 'InternalCharitycauseRecordConnection';
+    /** A list of edges. */
+    edges: InternalCharitycauseRecordEdge[];
+    /** Information to aid in pagination. */
+    pageInfo: PageInfo;
+}
+export type AvailableInternalCharitycauseRecordConnectionSelection = {
+    __typename?: boolean | null | undefined;
+    /** A list of edges. */
+    edges?: AvailableInternalCharitycauseRecordEdgeSelection;
+    /** Information to aid in pagination. */
+    pageInfo?: AvailablePageInfoSelection;
+};
+/** An edge in a InternalCharitycauseRecord connection. */
+export interface InternalCharitycauseRecordEdge {
+    __typename: 'InternalCharitycauseRecordEdge';
+    /** The item at the end of the edge */
+    node: InternalCharitycauseRecord;
+    /** A cursor for use in pagination */
+    cursor: Scalars['String'];
+}
+export type AvailableInternalCharitycauseRecordEdgeSelection = {
+    __typename?: boolean | null | undefined;
+    /** The item at the end of the edge */
+    node?: boolean | null | undefined;
+    /** A cursor for use in pagination */
+    cursor?: boolean | null | undefined;
+};
 /** Represents one of the roles an identity in the system can be entitled to */
 export interface GadgetRole {
     __typename: 'GadgetRole';
@@ -1984,6 +2335,14 @@ export interface Mutation {
     updateDonation: (UpdateDonationResult | null);
     deleteDonation: (DeleteDonationResult | null);
     bulkDeleteDonations: (BulkDeleteDonationsResult | null);
+    createCause: (CreateCauseResult | null);
+    updateCause: (UpdateCauseResult | null);
+    deleteCause: (DeleteCauseResult | null);
+    bulkDeleteCauses: (BulkDeleteCausesResult | null);
+    createCharitycause: (CreateCharitycauseResult | null);
+    updateCharitycause: (UpdateCharitycauseResult | null);
+    deleteCharitycause: (DeleteCharitycauseResult | null);
+    bulkDeleteCharitycauses: (BulkDeleteCharitycausesResult | null);
     globalShopifySync: (GlobalShopifySyncResult | null);
     internal: (InternalMutations | null);
 }
@@ -2000,6 +2359,14 @@ export type AvailableMutationSelection = {
     updateDonation?: AvailableUpdateDonationResultSelection;
     deleteDonation?: AvailableDeleteDonationResultSelection;
     bulkDeleteDonations?: AvailableBulkDeleteDonationsResultSelection;
+    createCause?: AvailableCreateCauseResultSelection;
+    updateCause?: AvailableUpdateCauseResultSelection;
+    deleteCause?: AvailableDeleteCauseResultSelection;
+    bulkDeleteCauses?: AvailableBulkDeleteCausesResultSelection;
+    createCharitycause?: AvailableCreateCharitycauseResultSelection;
+    updateCharitycause?: AvailableUpdateCharitycauseResultSelection;
+    deleteCharitycause?: AvailableDeleteCharitycauseResultSelection;
+    bulkDeleteCharitycauses?: AvailableBulkDeleteCharitycausesResultSelection;
     globalShopifySync?: AvailableGlobalShopifySyncResultSelection;
     internal?: AvailableInternalMutationsSelection;
 };
@@ -2127,6 +2494,94 @@ export type AvailableBulkDeleteDonationsResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
 };
+export interface CreateCauseResult {
+    __typename: 'CreateCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    cause: (Cause | null);
+}
+export type AvailableCreateCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    cause?: AvailableCauseSelection;
+};
+export interface UpdateCauseResult {
+    __typename: 'UpdateCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    cause: (Cause | null);
+}
+export type AvailableUpdateCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    cause?: AvailableCauseSelection;
+};
+export interface DeleteCauseResult {
+    __typename: 'DeleteCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableDeleteCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface BulkDeleteCausesResult {
+    __typename: 'BulkDeleteCausesResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableBulkDeleteCausesResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface CreateCharitycauseResult {
+    __typename: 'CreateCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycause: (Charitycause | null);
+}
+export type AvailableCreateCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycause?: AvailableCharitycauseSelection;
+};
+export interface UpdateCharitycauseResult {
+    __typename: 'UpdateCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycause: (Charitycause | null);
+}
+export type AvailableUpdateCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycause?: AvailableCharitycauseSelection;
+};
+export interface DeleteCharitycauseResult {
+    __typename: 'DeleteCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableDeleteCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface BulkDeleteCharitycausesResult {
+    __typename: 'BulkDeleteCharitycausesResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableBulkDeleteCharitycausesResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
 export interface GlobalShopifySyncResult {
     __typename: 'GlobalShopifySyncResult';
     success: Scalars['Boolean'];
@@ -2199,6 +2654,22 @@ export interface InternalMutations {
     triggerCreateDonation: (CreateDonationResult | null);
     triggerUpdateDonation: (UpdateDonationResult | null);
     triggerDeleteDonation: (DeleteDonationResult | null);
+    createCause: (InternalCreateCauseResult | null);
+    updateCause: (InternalUpdateCauseResult | null);
+    deleteCause: (InternalDeleteCauseResult | null);
+    deleteManyCause: (InternalDeleteManyCauseResult | null);
+    bulkCreateCauses: (InternalBulkCreateCausesResult | null);
+    triggerCreateCause: (CreateCauseResult | null);
+    triggerUpdateCause: (UpdateCauseResult | null);
+    triggerDeleteCause: (DeleteCauseResult | null);
+    createCharitycause: (InternalCreateCharitycauseResult | null);
+    updateCharitycause: (InternalUpdateCharitycauseResult | null);
+    deleteCharitycause: (InternalDeleteCharitycauseResult | null);
+    deleteManyCharitycause: (InternalDeleteManyCharitycauseResult | null);
+    bulkCreateCharitycauses: (InternalBulkCreateCharitycausesResult | null);
+    triggerCreateCharitycause: (CreateCharitycauseResult | null);
+    triggerUpdateCharitycause: (UpdateCharitycauseResult | null);
+    triggerDeleteCharitycause: (DeleteCharitycauseResult | null);
     triggerGlobalShopifySync: (GlobalShopifySyncResult | null);
 }
 export type AvailableInternalMutationsSelection = {
@@ -2261,6 +2732,22 @@ export type AvailableInternalMutationsSelection = {
     triggerCreateDonation?: AvailableCreateDonationResultSelection;
     triggerUpdateDonation?: AvailableUpdateDonationResultSelection;
     triggerDeleteDonation?: AvailableDeleteDonationResultSelection;
+    createCause?: AvailableInternalCreateCauseResultSelection;
+    updateCause?: AvailableInternalUpdateCauseResultSelection;
+    deleteCause?: AvailableInternalDeleteCauseResultSelection;
+    deleteManyCause?: AvailableInternalDeleteManyCauseResultSelection;
+    bulkCreateCauses?: AvailableInternalBulkCreateCausesResultSelection;
+    triggerCreateCause?: AvailableCreateCauseResultSelection;
+    triggerUpdateCause?: AvailableUpdateCauseResultSelection;
+    triggerDeleteCause?: AvailableDeleteCauseResultSelection;
+    createCharitycause?: AvailableInternalCreateCharitycauseResultSelection;
+    updateCharitycause?: AvailableInternalUpdateCharitycauseResultSelection;
+    deleteCharitycause?: AvailableInternalDeleteCharitycauseResultSelection;
+    deleteManyCharitycause?: AvailableInternalDeleteManyCharitycauseResultSelection;
+    bulkCreateCharitycauses?: AvailableInternalBulkCreateCharitycausesResultSelection;
+    triggerCreateCharitycause?: AvailableCreateCharitycauseResultSelection;
+    triggerUpdateCharitycause?: AvailableUpdateCharitycauseResultSelection;
+    triggerDeleteCharitycause?: AvailableDeleteCharitycauseResultSelection;
     triggerGlobalShopifySync?: AvailableGlobalShopifySyncResultSelection;
 };
 export interface LockOperationResult {
@@ -2788,6 +3275,122 @@ export type AvailableInternalBulkCreateDonationsResultSelection = {
     success?: boolean | null | undefined;
     errors?: AvailableExecutionErrorSelection;
     donations?: boolean | null | undefined;
+};
+export interface InternalCreateCauseResult {
+    __typename: 'InternalCreateCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    cause: (InternalCauseRecord | null);
+}
+export type AvailableInternalCreateCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    cause?: boolean | null | undefined;
+};
+export interface InternalUpdateCauseResult {
+    __typename: 'InternalUpdateCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    cause: (InternalCauseRecord | null);
+}
+export type AvailableInternalUpdateCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    cause?: boolean | null | undefined;
+};
+export interface InternalDeleteCauseResult {
+    __typename: 'InternalDeleteCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    cause: (InternalCauseRecord | null);
+}
+export type AvailableInternalDeleteCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    cause?: boolean | null | undefined;
+};
+export interface InternalDeleteManyCauseResult {
+    __typename: 'InternalDeleteManyCauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableInternalDeleteManyCauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface InternalBulkCreateCausesResult {
+    __typename: 'InternalBulkCreateCausesResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    causes: (InternalCauseRecord | null)[];
+}
+export type AvailableInternalBulkCreateCausesResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    causes?: boolean | null | undefined;
+};
+export interface InternalCreateCharitycauseResult {
+    __typename: 'InternalCreateCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycause: (InternalCharitycauseRecord | null);
+}
+export type AvailableInternalCreateCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycause?: boolean | null | undefined;
+};
+export interface InternalUpdateCharitycauseResult {
+    __typename: 'InternalUpdateCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycause: (InternalCharitycauseRecord | null);
+}
+export type AvailableInternalUpdateCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycause?: boolean | null | undefined;
+};
+export interface InternalDeleteCharitycauseResult {
+    __typename: 'InternalDeleteCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycause: (InternalCharitycauseRecord | null);
+}
+export type AvailableInternalDeleteCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycause?: boolean | null | undefined;
+};
+export interface InternalDeleteManyCharitycauseResult {
+    __typename: 'InternalDeleteManyCharitycauseResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+}
+export type AvailableInternalDeleteManyCharitycauseResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+};
+export interface InternalBulkCreateCharitycausesResult {
+    __typename: 'InternalBulkCreateCharitycausesResult';
+    success: Scalars['Boolean'];
+    errors: ExecutionError[];
+    charitycauses: (InternalCharitycauseRecord | null)[];
+}
+export type AvailableInternalBulkCreateCharitycausesResultSelection = {
+    __typename?: boolean | null | undefined;
+    success?: boolean | null | undefined;
+    errors?: AvailableExecutionErrorSelection;
+    charitycauses?: boolean | null | undefined;
 };
 export type ExplicitNestingRequired = never;
 export type DeepFilterNever<T> = T extends Record<string, unknown> ? FilterNever<{

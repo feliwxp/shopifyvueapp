@@ -157,8 +157,8 @@
     asynchronous-local-storage "^1.0.2"
     fastify-plugin "^3.0.0"
 
-"@gadget-client/vueapp@link:.gadget/client":
-  version "1.125.0"
+"@gadget-client/vueapp@file:.gadget/client":
+  version "1.588.0"
   dependencies:
     "@gadgetinc/api-client-core" "0.14.0"
 
@@ -1103,11 +1103,11 @@ functions-have-names@^1.2.3:
   resolved "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-"gadget-server@link:.gadget/server":
-  version "1.125.0"
+"gadget-server@file:.gadget/server":
+  version "1.588.0"
   dependencies:
     "@fastify/request-context" "3.0.0"
-    "@gadget-client/vueapp" "link:../../home/api/.cache/yarn/v6/npm-gadget-server-1.125.0-dff499e1-8071-4611-8384-bec089eafeb5-1690952382759/node_modules/client"
+    "@gadget-client/vueapp" "link:../../home/api/.cache/yarn/v6/npm-gadget-server-1.588.0-738fb6da-0e06-492e-84d4-4de3e08adeec-1691393995150/node_modules/client"
     "@gadgetinc/api-client-core" "0.14.0"
     "@types/node" "^16.11.7"
     fastify "^3.29.0"
@@ -1158,6 +1158,13 @@ gql-query-builder@^3.7.2:
   version "3.8.0"
   resolved "https://registry.npmjs.org/gql-query-builder/-/gql-query-builder-3.8.0.tgz"
   integrity sha512-q0PncZTrLDeyiH4R7YH1ISM+XGB4NvQ8eTm/Wr/sHSuquFZvqvDpGyMhbgoCZDc8kNAK8GOdfh3nI2GCLREFvw==
+
+graphql-tag@^2.12.6:
+  version "2.12.6"
+  resolved "https://registry.npmjs.org/graphql-tag/-/graphql-tag-2.12.6.tgz"
+  integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
+  dependencies:
+    tslib "^2.1.0"
 
 graphql-ws@^5.13.1:
   version "5.14.0"
@@ -1909,6 +1916,11 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
+tslib@^2.1.0:
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.1.tgz"
+  integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
 
 typescript@^4.5.3:
   version "4.9.5"

@@ -12,6 +12,7 @@ export type DefaultCharityServerSelection = {
       readonly website_url: true;
       readonly donations: false;
       readonly description: true;
+      readonly causes: false;
   };
 
   

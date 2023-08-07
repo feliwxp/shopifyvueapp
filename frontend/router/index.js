@@ -1,7 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-// import { History } from "@shopify/app-bridge/actions";
-// import { appBridge } from "../helpers/appBridge";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      component: () => import("../views/HomeView.vue"),
     },
     {
       path: "/browse",
@@ -26,17 +23,15 @@ const router = createRouter({
       name: "account",
       component: () => import("../views/AccountView.vue"),
     },
+    {
+      path: "/charities/:id",
+      component: () => import("../views/CharityDetail.vue"),
+    },
+    {
+      path: "/create-campaign",
+      component: () => import("../views/CreateCampaign.vue"),
+    },
   ],
 });
-
-// router.afterEach((to) => {
-//   const history = History.create(appBridge);
-//   history.dispatch(History.Action.PUSH, to.fullPath);
-// });
-
-// const history = History.create(appBridge);
-// history.subscribe(History.Action.POP, () => {
-//   router.go(-1);
-// });
 
 export default router;

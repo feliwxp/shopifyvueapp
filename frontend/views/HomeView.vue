@@ -8,9 +8,6 @@
       </Card>
       <Card sectioned :primaryFooterAction="{ content: 'Browse Causes', onAction: routeToBrowse }">
         <Heading>View all social causes available</Heading>
-        <template #primaryFooterAction>
-          <button url="/browse" />
-        </template>
         <p></p>
       </Card>
     </Page>

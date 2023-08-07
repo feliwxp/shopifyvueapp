@@ -3,10 +3,11 @@
 
     <Page :fullWidth="true" title="Campaigns">
       <Card>
-        <EmptyState v-bind="args" :action="{ content: 'Add Campaign' }"
+        <EmptyState v-bind="args" :action="{ content: 'Add Campaign', onAction: routeToCreateCampaign }"
           :secondaryAction="{ content: 'Learn More', url: 'https://help.shopify.com' }"
           image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png">
           <p>Create and manage your campaigns here.</p>
+
           <template #footerContent>
             <p>
               Learn more about managing your campaigns
@@ -27,8 +28,8 @@ export default {
     };
   },
   methods: {
-    routeToBrowse() {
-      this.$router.push('/browse');
+    routeToCreateCampaign() {
+      this.$router.push('/create-campaign');
     }
   }
 }

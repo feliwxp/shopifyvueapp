@@ -1,6 +1,6 @@
 {
   "name": "gadget-server",
-  "version": "1.533.0",
+  "version": "1.588.0",
   "files": [
     "dist/**/*"
   ],
@@ -39,6 +39,6 @@
   "gadget": {
     "applicationName": "Vueapp",
     "environmentName": "Development",
-    "environmentVersion": "533"
+    "environmentVersion": "588"
   }
 }

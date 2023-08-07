@@ -1,145 +1,126 @@
 <template>
-    <main>
-
-        <Page :fullWidth="true" title="Browse Causes" subtitle="Find your favourite causes">
-            <Card>
-                <ResourceList selectable :selectedItems="selectedItems"
-                    :resourceName="{ singular: 'customer', plural: 'customers' }" @selection-change="handleSelectionChange">
-                    <template #filterControl>
-                        <Filters v-model="queryValue" :filters="filters" :appliedFilters="appliedFilters"
-                            @query-clear="handleClearQuery" @clear-all="clearAllFilters">
-                            <template #filter-accountStatus>
-                                <ChoiceList title="Account status" titleHidden
-                                    :choices="[{ label: 'Enabled', value: 'enabled' }, { label: 'Not invited', value: 'not-invited' }]"
-                                    v-model="accountStatus" :allowMultiple="true">
-                                </ChoiceList>
-                            </template>
-                            <template #filter-taggedWith>
-                                <TextField label="Tagged with" v-model="taggedWith" autoComplete="off" labelHidden />
-                            </template>
-                            <template #filter-moneySpent>
-                                <RangeSlider label="Money spent is between" labelHidden v-model="moneySpent" prefix="$"
-                                    output :min="0" :max="2000" :step="1" />
-                            </template>
-                        </Filters>
-                    </template>
-                    <template #alternateTool>
-                        <Button>Email Customers</Button>
-                    </template>
-                    <ResourceItem v-for="item in resourceItems" :key="item.id" :url="item.url" :id="`${item.id}`"
-                        :accessibilityLabel="`View details for ${item.name}`" persistActions
-                        :shortcutActions="item.latestOrderUrl ? [{ content: 'View latest order', url: item.latestOrderUrl }] : null">
-                        <template #media>
-                            <Avatar customer size="medium" :name="item.name" />
-                        </template>
-                        <h3>
-                            <TextStyle variation="strong">{{ item.name }}</TextStyle>
-                        </h3>
-                        <div>{{ item.location }}</div>
-                    </ResourceItem>
-                </ResourceList>
-            </Card>
-        </Page>
-    </main>
+  <main>
+    <Page :fullWidth="true" title="Browse Causes" subtitle="Find your favourite causes">
+      <Card>
+        <ResourceList selectable :selectedItems="selectedItems" :resourceName="{ singular: 'cause', plural: 'causes' }"
+          @selection-change="handleSelectionChange">
+          <template #filterControl>
+            <Filters v-model="queryValue" :filters="filters" :appliedFilters="appliedFilters"
+              @query-clear="handleClearQuery" @clear-all="clearAllFilters">
+              <template #filter-selectedCauses>
+                <ChoiceList title="Cause" titleHidden :choices="causeList" v-model="selectedCauses" :allowMultiple="true">
+                </ChoiceList>
+              </template>
+            </Filters>
+          </template>
+          <ResourceItem v-for="item in filteredResourceItems" :key="item.id" :url="item.url" :id="`${item.id}`">
+            <template #media>
+              <Avatar customer size="medium" :name="item.name" />
+            </template>
+            <h3>
+              <TextStyle variation="strong">{{ item.name }}</TextStyle>
+            </h3>
+            <!-- <div>
+              <span v-for="cause in item.causes" :key="cause">
+                <Tag>{{ cause }}</Tag>&nbsp;
+              </span>
+            </div> -->
+            <div><span v-for="cause in item.causes" :key="cause" class="cause-bubble">{{ cause }}</span></div>
+          </ResourceItem>
+        </ResourceList>
+      </Card>
+    </Page>
+  </main>
 </template>
   
-<script setup>
-import { ref, computed } from 'vue';
-const resourceItems = [
-    {
-        id: 100,
-        url: 'customers/341',
-        name: 'Mae Jemison',
-        location: 'Decatur, USA',
-        latestOrderUrl: 'orders/123',
+<script>
+import { api } from "../utils/api";
+import { GET_CHARITIES } from "../utils/queries";
+
+export default {
+
+  data() {
+    return {
+      resourceItems: [],
+      filters: [{
+        key: 'selectedCauses',
+        label: 'Causes',
+        shortcut: true,
+      }],
+      selectedItems: [],
+      selectedCauses: [],
+      queryValue: null,
+    };
+  },
+  async mounted() {
+    const first = 10;
+    const after = null; // You can set the initial value of after here
+
+    const response = await api.query(GET_CHARITIES, { first, after });
+
+    this.resourceItems = response.charities.edges.map(edge => ({
+      id: edge.node.id,
+      url: `charities/${edge.node.id}`,
+      name: edge.node.name,
+      causes: edge.node.causes.edges.map(causeEdge => causeEdge.node.category),
+    }));
+  },
+  computed: {
+    appliedFilters() {
+      const tmpFilters = [];
+      if (this.selectedCauses.length > 0) {
+        const key = 'selectedCauses';
+        tmpFilters.push({
+          key,
+          label: this.disambiguateLabel(key, this.selectedCauses),
+          onRemove: this.handleSelectedCausesRemove,
+        });
+      }
+      return tmpFilters;
     },
-    {
-        id: 200,
-        url: 'customers/256',
-        name: 'Ellen Ochoa',
-        location: 'Los Angeles, USA',
+    causeList() {
+      // Extract unique causes from resourceItems
+      const causes = [...new Set(this.resourceItems.flatMap(item => item.causes))];
+
+      // Transform the causes into the format expected by ChoiceList
+      return causes.map(cause => ({ label: cause, value: cause }));
     },
-];
 
-const filters = [{
-    key: 'accountStatus',
-    label: 'Account status',
-    shortcut: true,
-}, {
-    key: 'taggedWith',
-    label: 'Tagged with',
-    shortcut: true,
-}, {
-    key: 'moneySpent',
-    label: 'Money spent',
-}];
+    filteredResourceItems() {
+      if (this.selectedCauses.length === 0) {
+        return this.resourceItems; // Return all items if no causes are selected
+      }
 
-const selectedItems = ref([]);
-const accountStatus = ref([]);
-const moneySpent = ref([]);
-const taggedWith = ref(null);
-const queryValue = ref(null);
-
-const appliedFilters = computed(() => {
-    const tmpFilters = [];
-    if (accountStatus.value && accountStatus.value.length > 0) {
-        const key = 'accountStatus';
-        tmpFilters.push({
-            key,
-            label: disambiguateLabel(key, accountStatus.value),
-            onRemove: handleAccountStatusRemove,
-        });
-    }
-    if (moneySpent.value && moneySpent.value.length > 0) {
-        const key = 'moneySpent';
-        tmpFilters.push({
-            key,
-            label: disambiguateLabel(key, moneySpent.value),
-            onRemove: handleMoneySpentRemove,
-        });
-    }
-    if (taggedWith.value) {
-        const key = 'taggedWith';
-        tmpFilters.push({
-            key,
-            label: disambiguateLabel(key, taggedWith.value),
-            onRemove: handleTaggedWithRemove,
-        });
-    }
-    return tmpFilters;
-});
-
-const handleAccountStatusRemove = () => {
-    accountStatus.value = [];
-};
-const handleMoneySpentRemove = () => {
-    moneySpent.value = [];
-};
-const handleTaggedWithRemove = () => {
-    taggedWith.value = null;
-};
-const handleClearQuery = () => {
-    queryValue.value = '';
-}
-const clearAllFilters = () => {
-    handleAccountStatusRemove();
-    handleMoneySpentRemove();
-    handleTaggedWithRemove();
-};
-const handleSelectionChange = (selected) => {
-    selectedItems.value = selected;
-}
-
-function disambiguateLabel(key, value) {
-    switch (key) {
-        case 'moneySpent':
-            return `Money spent is between $${value[0]} and $${value[1]}`;
-        case 'taggedWith':
-            return `Tagged with ${value}`;
-        case 'accountStatus':
-            return value.map((val) => `Customer ${val}`).join(', ');
+      // Filter resourceItems based on selected causes
+      return this.resourceItems.filter(item =>
+        this.selectedCauses.some(selectedCause => item.causes.includes(selectedCause))
+      );
+    },
+  },
+  methods: {
+    handleSelectedCausesRemove() {
+      this.selectedCauses = [];
+    },
+    handleClearQuery() {
+      this.queryValue = '';
+    },
+    clearAllFilters() {
+      this.handleSelectedCausesRemove();
+    },
+    handleSelectionChange(selected) {
+      this.selectedItems = selected;
+    },
+    disambiguateLabel(key, value) {
+      switch (key) {
+        case 'selectedCauses':
+          return value.map((val) => `Cause: ${val}`).join(', ');
         default:
-            return value;
-    }
-}
+          return value;
+      }
+    },
+  },
+};
 </script>
+
+
+<style></style>

@@ -6,6 +6,8 @@ import { ShopifyShopManager } from "./models/ShopifyShop.js";
 import { ShopifySyncManager } from "./models/ShopifySync.js";
 import { CharityManager } from "./models/Charity.js";
 import { DonationManager } from "./models/Donation.js";
+import { CauseManager } from "./models/Cause.js";
+import { CharitycauseManager } from "./models/Charitycause.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 import { globalActionRunner } from "@gadgetinc/api-client-core";
 const productionEnv = "production";
@@ -75,6 +77,8 @@ class Client {
     this.shopifySync = new ShopifySyncManager(this.connection);
     this.charity = new CharityManager(this.connection);
     this.donation = new DonationManager(this.connection);
+    this.cause = new CauseManager(this.connection);
+    this.charitycause = new CharitycauseManager(this.connection);
     this.currentSession = new CurrentSessionManager(this.connection);
     this.internal = {
       session: new InternalModelManager("session", this.connection, {
@@ -109,6 +113,16 @@ class Client {
       }),
       donation: new InternalModelManager("donation", this.connection, {
         pluralApiIdentifier: "donations",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      cause: new InternalModelManager("cause", this.connection, {
+        pluralApiIdentifier: "causes",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      charitycause: new InternalModelManager("charitycause", this.connection, {
+        pluralApiIdentifier: "charitycauses",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })
