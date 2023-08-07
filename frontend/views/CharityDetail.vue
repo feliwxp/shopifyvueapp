@@ -1,7 +1,6 @@
 <template>
   <main>
-    <Page :fullWidth="true" :title="charity.name" :breadcrumbs="[{ content: 'Browse', url: '/browse' }]"
-      :pagination="{ hasPrevious: true, hasNext: true }">
+    <Page :fullWidth="true" :title="charity.name" :breadcrumbs="[{ content: 'Browse', url: '/browse' }]">
       <AlphaCard>
         <AlphaStack spacing="5">
           <div><span v-for="cause in charity.causes" :key="cause" class="cause-bubble">{{ cause }}</span></div>
@@ -20,27 +19,30 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router';
-import { useCharityStore } from '../store'; // adjust the path to your store file
+import { useRoute, useRouter } from 'vue-router';
+import { useCharityStore } from '../store';
 
 export default {
   async mounted() {
     const route = useRoute();
     const charityId = route.params.id;
-    const charityStore = useCharityStore(); // use the store
+    const charityStore = useCharityStore();
 
-    // call the action to fetch the charity details
+    // Fetch all charities and the current charity details
+    await charityStore.fetchCharities();
     await charityStore.fetchCharityDetails(charityId);
   },
   computed: {
     charity() {
       const charityStore = useCharityStore();
-      return charityStore.charity; // access the charity state
+      return charityStore.charity;
     },
     formattedDescription() {
       const charityStore = useCharityStore();
-      return charityStore.formattedDescription; // access the getter
-    }
-  }
+      return charityStore.formattedDescription;
+    },
+
+  },
+
 };
 </script>

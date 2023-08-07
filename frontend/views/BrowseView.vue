@@ -2,8 +2,7 @@
   <main>
     <Page :fullWidth="true" title="Browse Causes" subtitle="Find your favourite causes">
       <Card>
-        <ResourceList selectable :selectedItems="selectedItems" :resourceName="{ singular: 'cause', plural: 'causes' }"
-          @selection-change="handleSelectionChange">
+        <ResourceList :resourceName="{ singular: 'cause', plural: 'causes' }">
           <template #filterControl>
             <Filters v-model="queryValue" :filters="filters" :appliedFilters="appliedFilters"
               @query-clear="handleClearQuery" @clear-all="clearAllFilters">
@@ -47,7 +46,6 @@ export default {
         label: 'Causes',
         shortcut: true,
       }],
-      selectedItems: [],
       selectedCauses: [],
       queryValue: null,
     };
@@ -106,9 +104,6 @@ export default {
     },
     clearAllFilters() {
       this.handleSelectedCausesRemove();
-    },
-    handleSelectionChange(selected) {
-      this.selectedItems = selected;
     },
     disambiguateLabel(key, value) {
       switch (key) {

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { api } from "./utils/api";
-import { GET_CHARITY_DETAIL } from "./utils/queries";
+import { GET_CHARITIES, GET_CHARITY_DETAIL } from "./utils/queries";
 
 export const useCharityStore = defineStore({
   id: "charity",
@@ -17,6 +17,10 @@ export const useCharityStore = defineStore({
     },
   },
   actions: {
+    async fetchCharities() {
+      const response = await api.query(GET_CHARITIES, { first: 100 }); // Fetch the first 100 charities
+      this.charities = response.charities.edges.map((edge) => edge.node);
+    },
     async fetchCharityDetails(charityId) {
       const response = await api.query(GET_CHARITY_DETAIL, { id: charityId });
       this.charity = {
