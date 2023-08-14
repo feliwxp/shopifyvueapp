@@ -1,6 +1,6 @@
 {
   "name": "@gadget-client/vueapp",
-  "version": "1.588.0",
+  "version": "1.1504.0",
   "files": [
     "dist-*/",
     "types",
@@ -18,7 +18,7 @@
   },
   "private": true,
   "dependencies": {
-    "@gadgetinc/api-client-core": "0.14.0"
+    "@gadgetinc/api-client-core": "0.15.0"
   },
   "devDependencies": {
     "typescript": "4.5.5",
@@ -30,6 +30,6 @@
   "gadget": {
     "applicationName": "Vueapp",
     "environmentName": "Development",
-    "environmentVersion": "588"
+    "environmentVersion": "1504"
   }
 }

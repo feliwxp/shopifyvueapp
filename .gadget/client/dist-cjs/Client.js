@@ -31,6 +31,7 @@ var import_Charity = require("./models/Charity.js");
 var import_Donation = require("./models/Donation.js");
 var import_Cause = require("./models/Cause.js");
 var import_Charitycause = require("./models/Charitycause.js");
+var import_Campaign = require("./models/Campaign.js");
 var import_CurrentSession = require("./models/CurrentSession.js");
 var import_api_client_core2 = require("@gadgetinc/api-client-core");
 const productionEnv = "production";
@@ -102,6 +103,7 @@ class Client {
     this.donation = new import_Donation.DonationManager(this.connection);
     this.cause = new import_Cause.CauseManager(this.connection);
     this.charitycause = new import_Charitycause.CharitycauseManager(this.connection);
+    this.campaign = new import_Campaign.CampaignManager(this.connection);
     this.currentSession = new import_CurrentSession.CurrentSessionManager(this.connection);
     this.internal = {
       session: new import_api_client_core.InternalModelManager("session", this.connection, {
@@ -146,6 +148,11 @@ class Client {
       }),
       charitycause: new import_api_client_core.InternalModelManager("charitycause", this.connection, {
         pluralApiIdentifier: "charitycauses",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      campaign: new import_api_client_core.InternalModelManager("campaign", this.connection, {
+        pluralApiIdentifier: "campaigns",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })

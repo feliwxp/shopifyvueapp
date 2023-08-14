@@ -71,6 +71,7 @@ export type DefaultShopifyShopServerSelection = {
       readonly weightUnit: true;
       readonly zipCode: true;
       readonly donations: false;
+      readonly campaigns: false;
   };
 
   

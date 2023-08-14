@@ -50,6 +50,9 @@ export type InternalCauseRecord = Scalars["JSONObject"];
 /** Represents one charitycause result record in internal api calls. Returns a JSON blob of all the record's fields. */
 export type InternalCharitycauseRecord = Scalars["JSONObject"];
 
+/** Represents one campaign result record in internal api calls. Returns a JSON blob of all the record's fields. */
+export type InternalCampaignRecord = Scalars["JSONObject"];
+
 
 
 export interface ShopifyProductSort {
@@ -311,6 +314,76 @@ export interface FloatFilter {
 
 
 
+export interface CharitySort {
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+  /** Sort the results by the name field. Defaults to ascending (smallest value first). */
+  name?: SortOrder | null;
+  /** Sort the results by the website_url field. Defaults to ascending (smallest value first). */
+  website_url?: SortOrder | null;
+  /** Sort the results by the description field. Defaults to ascending (smallest value first). */
+  description?: SortOrder | null;
+};
+
+
+
+export interface CharityFilter {
+  AND?: (CharityFilter | null)[];
+  OR?: (CharityFilter | null)[];
+  NOT?: (CharityFilter | null)[];
+  id?: IDFilter | null;
+  createdAt?: DateTimeFilter | null;
+  updatedAt?: DateTimeFilter | null;
+  name?: StringFilter | null;
+  website_url?: StringFilter | null;
+  description?: StringFilter | null;
+  campaign?: IDFilter | null;
+};
+
+
+
+export interface CampaignSort {
+  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
+  id?: SortOrder | null;
+  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
+  createdAt?: SortOrder | null;
+  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
+  updatedAt?: SortOrder | null;
+  /** Sort the results by the type field. Defaults to ascending (smallest value first). */
+  type?: SortOrder | null;
+  /** Sort the results by the startDate field. Defaults to ascending (smallest value first). */
+  startDate?: SortOrder | null;
+  /** Sort the results by the endDate field. Defaults to ascending (smallest value first). */
+  endDate?: SortOrder | null;
+  /** Sort the results by the activated field. Defaults to ascending (smallest value first). */
+  activated?: SortOrder | null;
+  /** Sort the results by the settings field. Defaults to ascending (smallest value first). */
+  settings?: SortOrder | null;
+};
+
+
+
+export interface CampaignFilter {
+  AND?: (CampaignFilter | null)[];
+  OR?: (CampaignFilter | null)[];
+  NOT?: (CampaignFilter | null)[];
+  id?: IDFilter | null;
+  createdAt?: DateTimeFilter | null;
+  updatedAt?: DateTimeFilter | null;
+  shop?: IDFilter | null;
+  type?: StringFilter | null;
+  startDate?: DateTimeFilter | null;
+  endDate?: DateTimeFilter | null;
+  activated?: BooleanFilter | null;
+  settings?: JSONFilter | null;
+};
+
+
+
 export interface ShopifyShopSort {
   /** Sort the results by the id field. Defaults to ascending (smallest value first). */
   id?: SortOrder | null;
@@ -510,37 +583,6 @@ export interface ShopifyShopFilter {
 
 
 
-export interface CharitySort {
-  /** Sort the results by the id field. Defaults to ascending (smallest value first). */
-  id?: SortOrder | null;
-  /** Sort the results by the createdAt field. Defaults to ascending (smallest value first). */
-  createdAt?: SortOrder | null;
-  /** Sort the results by the updatedAt field. Defaults to ascending (smallest value first). */
-  updatedAt?: SortOrder | null;
-  /** Sort the results by the name field. Defaults to ascending (smallest value first). */
-  name?: SortOrder | null;
-  /** Sort the results by the website_url field. Defaults to ascending (smallest value first). */
-  website_url?: SortOrder | null;
-  /** Sort the results by the description field. Defaults to ascending (smallest value first). */
-  description?: SortOrder | null;
-};
-
-
-
-export interface CharityFilter {
-  AND?: (CharityFilter | null)[];
-  OR?: (CharityFilter | null)[];
-  NOT?: (CharityFilter | null)[];
-  id?: IDFilter | null;
-  createdAt?: DateTimeFilter | null;
-  updatedAt?: DateTimeFilter | null;
-  name?: StringFilter | null;
-  website_url?: StringFilter | null;
-  description?: StringFilter | null;
-};
-
-
-
 export interface CauseSort {
   /** Sort the results by the id field. Defaults to ascending (smallest value first). */
   id?: SortOrder | null;
@@ -641,6 +683,7 @@ export interface CreateCharityInput {
   charitycauses?: (CharitycauseHasManyInput | null)[];
   causes?: (CauseHasManyThroughInput | null)[];
   charitycause?: (CharitycauseHasManyInput | null)[];
+  campaign?: CampaignBelongsToInput | null;
 };
 
 
@@ -682,6 +725,7 @@ export interface NestedCharityCreateInput {
   charitycauses?: (CharitycauseHasManyInput | null)[];
   causes?: (CauseHasManyThroughInput | null)[];
   charitycause?: (CharitycauseHasManyInput | null)[];
+  campaign?: CampaignBelongsToInput | null;
 };
 
 
@@ -738,6 +782,7 @@ export interface NestedCharityUpdateInput {
   charitycauses?: (CharitycauseHasManyInput | null)[];
   causes?: (CauseHasManyThroughInput | null)[];
   charitycause?: (CharitycauseHasManyInput | null)[];
+  campaign?: CampaignBelongsToInput | null;
   id: (Scalars['GadgetID'] | null);
 };
 
@@ -767,7 +812,91 @@ export interface NestedCauseDeleteInput {
 
 
 
+export interface CampaignBelongsToInput {
+  create?: NestedCampaignCreateInput | null;
+  update?: NestedCampaignUpdateInput | null;
+  delete?: NestedCampaignDeleteInput | null;
+  /** Existing ID of another record, which you would like to associate this record with */
+  _link?: (Scalars['GadgetID'] | null) | null;
+};
+
+
+
+export interface NestedCampaignCreateInput {
+  shop?: ShopifyShopBelongsToInput | null;
+  type?: (Scalars['String'] | null) | null;
+  charity?: (CharityHasManyInput | null)[];
+  startDate?: Date | Scalars['ISO8601DateString'] | null;
+  endDate?: Date | Scalars['ISO8601DateString'] | null;
+  activated?: (Scalars['Boolean'] | null) | null;
+  settings?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export interface CharityHasManyInput {
+  create?: NestedCharityCreateInput | null;
+  update?: NestedCharityUpdateInput | null;
+  delete?: NestedCharityDeleteInput | null;
+  /** Creates, updates, or deletes existing records in the database as needed to arrive at the list of records specified. */
+  _converge?: ConvergeCharityInput | null;
+};
+
+
+
 export interface NestedCharityDeleteInput {
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export interface ConvergeCharityInput {
+  /** The new list of records to converge to */
+  values: (ConvergeCharityValues | null)[];
+  /** An optional partial set of action api identifiers to use when creating, updating, and deleting records to converge to the new list. */
+  actions?: ConvergeActionMap | null;
+};
+
+
+
+export interface ConvergeCharityValues {
+  id?: (Scalars['GadgetID'] | null) | null;
+  name?: (Scalars['String'] | null) | null;
+  website_url?: (Scalars['String'] | null) | null;
+  donations?: (DonationHasManyInput | null)[];
+  description?: (Scalars['String'] | null) | null;
+  causes?: (CauseHasManyThroughInput | null)[];
+  charitycause?: (CharitycauseHasManyInput | null)[];
+  campaign?: CampaignBelongsToInput | null;
+};
+
+
+
+export interface ConvergeActionMap {
+  /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
+  create?: (Scalars['String'] | null) | null;
+  /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
+  update?: (Scalars['String'] | null) | null;
+  /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
+  delete?: (Scalars['String'] | null) | null;
+};
+
+
+
+export interface NestedCampaignUpdateInput {
+  shop?: ShopifyShopBelongsToInput | null;
+  type?: (Scalars['String'] | null) | null;
+  charity?: (CharityHasManyInput | null)[];
+  startDate?: Date | Scalars['ISO8601DateString'] | null;
+  endDate?: Date | Scalars['ISO8601DateString'] | null;
+  activated?: (Scalars['Boolean'] | null) | null;
+  settings?: (Scalars['JSON'] | null) | null;
+  id: (Scalars['GadgetID'] | null);
+};
+
+
+
+export interface NestedCampaignDeleteInput {
   id: (Scalars['GadgetID'] | null);
 };
 
@@ -800,17 +929,6 @@ export interface ConvergeCharitycauseValues {
   id?: (Scalars['GadgetID'] | null) | null;
   cause?: CauseBelongsToInput | null;
   charity?: CharityBelongsToInput | null;
-};
-
-
-
-export interface ConvergeActionMap {
-  /** One of the model action's API identifiers. Specifies which action to use to create new records that are in the set of specified records but not yet in the database. Defaults to the action named `create` if it exists. */
-  create?: (Scalars['String'] | null) | null;
-  /** One of the model action's API identifiers. Specifies which action to use to update new records that are in the set of specified records and already in the database, but maybe have different field values. Defaults to the action named `update` if it exists. */
-  update?: (Scalars['String'] | null) | null;
-  /** One of the model action's API identifiers. Specifies which action to use to delete records that are not in the set of specified records but exist in the database. Defaults to the action named `delete` if it exists. */
-  delete?: (Scalars['String'] | null) | null;
 };
 
 
@@ -858,6 +976,7 @@ export interface UpdateCharityInput {
   charitycauses?: (CharitycauseHasManyInput | null)[];
   causes?: (CauseHasManyThroughInput | null)[];
   charitycause?: (CharitycauseHasManyInput | null)[];
+  campaign?: CampaignBelongsToInput | null;
 };
 
 
@@ -908,6 +1027,30 @@ export interface CreateCharitycauseInput {
 export interface UpdateCharitycauseInput {
   cause?: CauseBelongsToInput | null;
   charity?: CharityBelongsToInput | null;
+};
+
+
+
+export interface CreateCampaignInput {
+  shop?: ShopifyShopBelongsToInput | null;
+  type?: (Scalars['String'] | null) | null;
+  charity?: (CharityHasManyInput | null)[];
+  startDate?: Date | Scalars['ISO8601DateString'] | null;
+  endDate?: Date | Scalars['ISO8601DateString'] | null;
+  activated?: (Scalars['Boolean'] | null) | null;
+  settings?: (Scalars['JSON'] | null) | null;
+};
+
+
+
+export interface UpdateCampaignInput {
+  shop?: ShopifyShopBelongsToInput | null;
+  type?: (Scalars['String'] | null) | null;
+  charity?: (CharityHasManyInput | null)[];
+  startDate?: Date | Scalars['ISO8601DateString'] | null;
+  endDate?: Date | Scalars['ISO8601DateString'] | null;
+  activated?: (Scalars['Boolean'] | null) | null;
+  settings?: (Scalars['JSON'] | null) | null;
 };
 
 
@@ -1091,6 +1234,7 @@ export interface InternalCharityInput {
   name?: (Scalars['String'] | null) | null;
   website_url?: (Scalars['String'] | null) | null;
   description?: (Scalars['String'] | null) | null;
+  campaign?: InternalBelongsToInput | null;
 };
 
 
@@ -1137,6 +1281,22 @@ export interface InternalCharitycauseInput {
   updatedAt?: Date | Scalars['ISO8601DateString'] | null;
   cause?: InternalBelongsToInput | null;
   charity?: InternalBelongsToInput | null;
+};
+
+
+
+export interface InternalCampaignInput {
+  state?: (Scalars['RecordState'] | null) | null;
+  stateHistory?: (Scalars['RecordState'] | null) | null;
+  id?: (Scalars['GadgetID'] | null) | null;
+  createdAt?: Date | Scalars['ISO8601DateString'] | null;
+  updatedAt?: Date | Scalars['ISO8601DateString'] | null;
+  shop?: InternalBelongsToInput | null;
+  type?: (Scalars['String'] | null) | null;
+  startDate?: Date | Scalars['ISO8601DateString'] | null;
+  endDate?: Date | Scalars['ISO8601DateString'] | null;
+  activated?: (Scalars['Boolean'] | null) | null;
+  settings?: (Scalars['JSON'] | null) | null;
 };
 
 
@@ -1527,6 +1687,8 @@ export interface Query {
   causes: CauseConnection;
   charitycause: (Charitycause | null);
   charitycauses: CharitycauseConnection;
+  campaign: (Campaign | null);
+  campaigns: CampaignConnection;
   internal: (InternalQueries | null);
   currentSession: (Session | null);
   shopifyConnection: Shopify;
@@ -1573,6 +1735,10 @@ export type AvailableQuerySelection = {
   charitycause?: AvailableCharitycauseSelection;
 
   charitycauses?: AvailableCharitycauseConnectionSelection;
+
+  campaign?: AvailableCampaignSelection;
+
+  campaigns?: AvailableCampaignConnectionSelection;
 
   internal?: AvailableInternalQueriesSelection;
 
@@ -1723,6 +1889,7 @@ export interface ShopifyShop {
   weightUnit: (Scalars['String'] | null);
   zipCode: (Scalars['String'] | null);
   donations: DonationConnection;
+  campaigns: CampaignConnection;
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -1868,6 +2035,8 @@ export type AvailableShopifyShopSelection = {
   zipCode?: boolean | null | undefined;
 
   donations?: AvailableDonationConnectionSelection;
+
+  campaigns?: AvailableCampaignConnectionSelection;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -2344,6 +2513,8 @@ export interface Charity {
   description: (Scalars['String'] | null);
   causes: CauseConnection;
   charitycauses: CharitycauseConnection;
+  campaign: (Campaign | null);
+  campaignId: (Scalars['GadgetID'] | null);
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all: Scalars['JSONObject'];
 };
@@ -2374,6 +2545,10 @@ export type AvailableCharitySelection = {
   causes?: AvailableCauseConnectionSelection;
 
   charitycauses?: AvailableCharitycauseConnectionSelection;
+
+  campaign?: AvailableCampaignSelection;
+
+  campaignId?: boolean | null | undefined;
 
   /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
   _all?: boolean | null | undefined;
@@ -2605,6 +2780,109 @@ export type AvailableCharitycauseSelection = {
 };
 
 
+
+export interface Campaign {
+  __typename: 'Campaign';
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id: Scalars['GadgetID'];
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt: Scalars['DateTime'];
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt: Scalars['DateTime'];
+  shop: (ShopifyShop | null);
+  shopId: (Scalars['GadgetID'] | null);
+  type: (Scalars['String'] | null);
+  charity: CharityConnection;
+  startDate: (Scalars['DateTime'] | null);
+  endDate: (Scalars['DateTime'] | null);
+  activated: (Scalars['Boolean'] | null);
+  settings: (Scalars['JSON'] | null);
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all: Scalars['JSONObject'];
+};
+
+
+
+export type AvailableCampaignSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The globally unique, unchanging identifier for this record. Assigned and managed by Gadget. */
+  id?: boolean | null | undefined;
+
+  /** The time at which this record was first created. Set once upon record creation and never changed. Managed by Gadget. */
+  createdAt?: boolean | null | undefined;
+
+  /** The time at which this record was last changed. Set each time the record is successfully acted upon by an action. Managed by Gadget. */
+  updatedAt?: boolean | null | undefined;
+
+  shop?: AvailableShopifyShopSelection;
+
+  shopId?: boolean | null | undefined;
+
+  type?: boolean | null | undefined;
+
+  charity?: AvailableCharityConnectionSelection;
+
+  startDate?: boolean | null | undefined;
+
+  endDate?: boolean | null | undefined;
+
+  activated?: boolean | null | undefined;
+
+  settings?: boolean | null | undefined;
+
+  /** Get all the fields for this record. Useful for not having to list out all the fields you want to retrieve, but slower. */
+  _all?: boolean | null | undefined;
+};
+
+
+/** A connection to a list of Campaign items. */
+export interface CampaignConnection {
+  __typename: 'CampaignConnection';
+  /** A list of edges. */
+  edges: CampaignEdge[];
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableCampaignConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableCampaignEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a Campaign connection. */
+export interface CampaignEdge {
+  __typename: 'CampaignEdge';
+  /** The item at the end of the edge */
+  node: Campaign;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableCampaignEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: AvailableCampaignSelection;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
 /** A connection to a list of Session items. */
 export interface SessionConnection {
   __typename: 'SessionConnection';
@@ -2718,6 +2996,8 @@ export interface InternalQueries {
   listCause: InternalCauseRecordConnection;
   charitycause: (InternalCharitycauseRecord | null);
   listCharitycause: InternalCharitycauseRecordConnection;
+  campaign: (InternalCampaignRecord | null);
+  listCampaign: InternalCampaignRecordConnection;
   /** Currently open platform transaction details, or null if no transaction is open */
   currentTransactionDetails: (Scalars['JSONObject'] | null);
 };
@@ -2763,6 +3043,10 @@ export type AvailableInternalQueriesSelection = {
   charitycause?: boolean | null | undefined;
 
   listCharitycause?: AvailableInternalCharitycauseRecordConnectionSelection;
+
+  campaign?: boolean | null | undefined;
+
+  listCampaign?: AvailableInternalCampaignRecordConnectionSelection;
 
   /** Currently open platform transaction details, or null if no transaction is open */
   currentTransactionDetails?: boolean | null | undefined;
@@ -3183,6 +3467,52 @@ export type AvailableInternalCharitycauseRecordEdgeSelection = {
 };
 
 
+/** A connection to a list of InternalCampaignRecord items. */
+export interface InternalCampaignRecordConnection {
+  __typename: 'InternalCampaignRecordConnection';
+  /** A list of edges. */
+  edges: InternalCampaignRecordEdge[];
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+
+
+export type AvailableInternalCampaignRecordConnectionSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** A list of edges. */
+  edges?: AvailableInternalCampaignRecordEdgeSelection;
+
+  /** Information to aid in pagination. */
+  pageInfo?: AvailablePageInfoSelection;
+};
+
+
+/** An edge in a InternalCampaignRecord connection. */
+export interface InternalCampaignRecordEdge {
+  __typename: 'InternalCampaignRecordEdge';
+  /** The item at the end of the edge */
+  node: InternalCampaignRecord;
+  /** A cursor for use in pagination */
+  cursor: Scalars['String'];
+};
+
+
+
+export type AvailableInternalCampaignRecordEdgeSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  /** The item at the end of the edge */
+  node?: boolean | null | undefined;
+
+  /** A cursor for use in pagination */
+  cursor?: boolean | null | undefined;
+};
+
+
 /** Represents one of the roles an identity in the system can be entitled to */
 export interface GadgetRole {
   __typename: 'GadgetRole';
@@ -3332,6 +3662,10 @@ export interface Mutation {
   updateCharitycause: (UpdateCharitycauseResult | null);
   deleteCharitycause: (DeleteCharitycauseResult | null);
   bulkDeleteCharitycauses: (BulkDeleteCharitycausesResult | null);
+  createCampaign: (CreateCampaignResult | null);
+  updateCampaign: (UpdateCampaignResult | null);
+  deleteCampaign: (DeleteCampaignResult | null);
+  bulkDeleteCampaigns: (BulkDeleteCampaignsResult | null);
   globalShopifySync: (GlobalShopifySyncResult | null);
   internal: (InternalMutations | null);
 };
@@ -3379,6 +3713,14 @@ export type AvailableMutationSelection = {
   deleteCharitycause?: AvailableDeleteCharitycauseResultSelection;
 
   bulkDeleteCharitycauses?: AvailableBulkDeleteCharitycausesResultSelection;
+
+  createCampaign?: AvailableCreateCampaignResultSelection;
+
+  updateCampaign?: AvailableUpdateCampaignResultSelection;
+
+  deleteCampaign?: AvailableDeleteCampaignResultSelection;
+
+  bulkDeleteCampaigns?: AvailableBulkDeleteCampaignsResultSelection;
 
   globalShopifySync?: AvailableGlobalShopifySyncResultSelection;
 
@@ -3781,6 +4123,88 @@ export type AvailableBulkDeleteCharitycausesResultSelection = {
 
 
 
+export interface CreateCampaignResult {
+  __typename: 'CreateCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaign: (Campaign | null);
+};
+
+
+
+export type AvailableCreateCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaign?: AvailableCampaignSelection;
+};
+
+
+
+export interface UpdateCampaignResult {
+  __typename: 'UpdateCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaign: (Campaign | null);
+};
+
+
+
+export type AvailableUpdateCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaign?: AvailableCampaignSelection;
+};
+
+
+
+export interface DeleteCampaignResult {
+  __typename: 'DeleteCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableDeleteCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export interface BulkDeleteCampaignsResult {
+  __typename: 'BulkDeleteCampaignsResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableBulkDeleteCampaignsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
 export interface GlobalShopifySyncResult {
   __typename: 'GlobalShopifySyncResult';
   success: Scalars['Boolean'];
@@ -3879,6 +4303,14 @@ export interface InternalMutations {
   triggerCreateCharitycause: (CreateCharitycauseResult | null);
   triggerUpdateCharitycause: (UpdateCharitycauseResult | null);
   triggerDeleteCharitycause: (DeleteCharitycauseResult | null);
+  createCampaign: (InternalCreateCampaignResult | null);
+  updateCampaign: (InternalUpdateCampaignResult | null);
+  deleteCampaign: (InternalDeleteCampaignResult | null);
+  deleteManyCampaign: (InternalDeleteManyCampaignResult | null);
+  bulkCreateCampaigns: (InternalBulkCreateCampaignsResult | null);
+  triggerCreateCampaign: (CreateCampaignResult | null);
+  triggerUpdateCampaign: (UpdateCampaignResult | null);
+  triggerDeleteCampaign: (DeleteCampaignResult | null);
   triggerGlobalShopifySync: (GlobalShopifySyncResult | null);
 };
 
@@ -4034,6 +4466,22 @@ export type AvailableInternalMutationsSelection = {
   triggerUpdateCharitycause?: AvailableUpdateCharitycauseResultSelection;
 
   triggerDeleteCharitycause?: AvailableDeleteCharitycauseResultSelection;
+
+  createCampaign?: AvailableInternalCreateCampaignResultSelection;
+
+  updateCampaign?: AvailableInternalUpdateCampaignResultSelection;
+
+  deleteCampaign?: AvailableInternalDeleteCampaignResultSelection;
+
+  deleteManyCampaign?: AvailableInternalDeleteManyCampaignResultSelection;
+
+  bulkCreateCampaigns?: AvailableInternalBulkCreateCampaignsResultSelection;
+
+  triggerCreateCampaign?: AvailableCreateCampaignResultSelection;
+
+  triggerUpdateCampaign?: AvailableUpdateCampaignResultSelection;
+
+  triggerDeleteCampaign?: AvailableDeleteCampaignResultSelection;
 
   triggerGlobalShopifySync?: AvailableGlobalShopifySyncResultSelection;
 };
@@ -5217,6 +5665,113 @@ export type AvailableInternalBulkCreateCharitycausesResultSelection = {
   errors?: AvailableExecutionErrorSelection;
 
   charitycauses?: boolean | null | undefined;
+};
+
+
+
+export interface InternalCreateCampaignResult {
+  __typename: 'InternalCreateCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaign: (InternalCampaignRecord | null);
+};
+
+
+
+export type AvailableInternalCreateCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaign?: boolean | null | undefined;
+};
+
+
+
+export interface InternalUpdateCampaignResult {
+  __typename: 'InternalUpdateCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaign: (InternalCampaignRecord | null);
+};
+
+
+
+export type AvailableInternalUpdateCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaign?: boolean | null | undefined;
+};
+
+
+
+export interface InternalDeleteCampaignResult {
+  __typename: 'InternalDeleteCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaign: (InternalCampaignRecord | null);
+};
+
+
+
+export type AvailableInternalDeleteCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaign?: boolean | null | undefined;
+};
+
+
+
+export interface InternalDeleteManyCampaignResult {
+  __typename: 'InternalDeleteManyCampaignResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+};
+
+
+
+export type AvailableInternalDeleteManyCampaignResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+};
+
+
+
+export interface InternalBulkCreateCampaignsResult {
+  __typename: 'InternalBulkCreateCampaignsResult';
+  success: Scalars['Boolean'];
+  errors: ExecutionError[];
+  campaigns: (InternalCampaignRecord | null)[];
+};
+
+
+
+export type AvailableInternalBulkCreateCampaignsResultSelection = {
+
+  __typename?: boolean | null | undefined;
+
+  success?: boolean | null | undefined;
+
+  errors?: AvailableExecutionErrorSelection;
+
+  campaigns?: boolean | null | undefined;
 };
 
 

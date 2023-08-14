@@ -8,6 +8,7 @@ import { CharityManager } from "./models/Charity.js";
 import { DonationManager } from "./models/Donation.js";
 import { CauseManager } from "./models/Cause.js";
 import { CharitycauseManager } from "./models/Charitycause.js";
+import { CampaignManager } from "./models/Campaign.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 import { globalActionRunner } from "@gadgetinc/api-client-core";
 const productionEnv = "production";
@@ -79,6 +80,7 @@ class Client {
     this.donation = new DonationManager(this.connection);
     this.cause = new CauseManager(this.connection);
     this.charitycause = new CharitycauseManager(this.connection);
+    this.campaign = new CampaignManager(this.connection);
     this.currentSession = new CurrentSessionManager(this.connection);
     this.internal = {
       session: new InternalModelManager("session", this.connection, {
@@ -123,6 +125,11 @@ class Client {
       }),
       charitycause: new InternalModelManager("charitycause", this.connection, {
         pluralApiIdentifier: "charitycauses",
+        // @ts-ignore
+        hasAmbiguousIdentifier: false
+      }),
+      campaign: new InternalModelManager("campaign", this.connection, {
+        pluralApiIdentifier: "campaigns",
         // @ts-ignore
         hasAmbiguousIdentifier: false
       })

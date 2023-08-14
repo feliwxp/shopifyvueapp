@@ -13,6 +13,8 @@ export type DefaultCharityServerSelection = {
       readonly donations: false;
       readonly description: true;
       readonly causes: false;
+      readonly campaignId: true;
+    readonly campaign: false;
   };
 
   

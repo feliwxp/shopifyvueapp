@@ -11,6 +11,7 @@ import { CharityManager } from "./models/Charity.js";
 import { DonationManager } from "./models/Donation.js";
 import { CauseManager } from "./models/Cause.js";
 import { CharitycauseManager } from "./models/Charitycause.js";
+import { CampaignManager } from "./models/Campaign.js";
 import { CurrentSessionManager } from "./models/CurrentSession.js";
 type InternalModelManagers = {
     session: InternalModelManager;
@@ -22,6 +23,7 @@ type InternalModelManagers = {
     donation: InternalModelManager;
     cause: InternalModelManager;
     charitycause: InternalModelManager;
+    campaign: InternalModelManager;
 };
 type ClientOptions = Omit<ApiClientOptions, "environment"> & {
     environment?: string;
@@ -40,6 +42,7 @@ export declare class Client implements AnyClient {
     donation: DonationManager;
     cause: CauseManager;
     charitycause: CharitycauseManager;
+    campaign: CampaignManager;
     currentSession: CurrentSessionManager;
     /**
     * Namespaced object for accessing models via the Gadget internal APIs, which provide lower level and higher privileged operations directly against the database. Useful for maintenance operations like migrations or correcting broken data, and for implementing the high level actions.

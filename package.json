@@ -10,6 +10,7 @@
     "@gadgetinc/react": "^0.13.5",
     "@gadgetinc/react-shopify-app-bridge": "^0.11.0",
     "@ownego/polaris-vue": "^1.3.9",
+    "@quasar/extras": "^1.16.5",
     "@shopify/app-bridge": "^3.7.9",
     "@shopify/app-bridge-react": "3.5.0",
     "@shopify/polaris": "10.45.0",
@@ -21,6 +22,7 @@
     "gadget-server": "file:.gadget/server",
     "graphql-tag": "^2.12.6",
     "pinia": "^2.1.6",
+    "quasar": "^2.12.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
@@ -28,9 +30,14 @@
     "typescript": "^4.5.3",
     "veaury": "^2.3.12",
     "vite": "^4.2.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   },
   "scripts": {
     "vite:build": "NODE_ENV=production vite build"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^1.4.1",
+    "sass": "^1.32.12"
   }
 }

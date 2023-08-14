@@ -1,6 +1,5 @@
 <template>
   <main>
-
     <Page :fullWidth="true" title="Campaigns">
       <Card>
         <EmptyState v-bind="args" :action="{ content: 'Add Campaign', onAction: routeToCreateCampaign }"

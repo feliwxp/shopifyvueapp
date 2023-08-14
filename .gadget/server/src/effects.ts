@@ -217,6 +217,16 @@ export async function preventCrossShopDataAccess(params: AnyParams, record: Gadg
   if (context.type != "effect") {
     throw new Error("Can't prevent cross shop data access outside of an action effect");
   }
+  if (!params) {
+    throw new Error(
+      "The `params` parameter is required in preventCrossShopDataAccess(params, record, options?: { shopBelongsToField: string })"
+    );
+  }
+  if (!record) {
+    throw new Error(
+      "The `record` parameter is required in preventCrossShopDataAccess(params, record, options?: { shopBelongsToField: string })"
+    );
+  }
   const model = context.model;
   const appTenancy = context[AppTenancyKey];
   const shopBelongsToField = options?.shopBelongsToField;

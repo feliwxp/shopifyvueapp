@@ -38,6 +38,7 @@ __exportStar(require("./models/Charity"), exports);
 __exportStar(require("./models/Donation"), exports);
 __exportStar(require("./models/Cause"), exports);
 __exportStar(require("./models/Charitycause"), exports);
+__exportStar(require("./models/Campaign"), exports);
 __exportStar(require("./effects"), exports);
 /**
  * An instance of the Gadget logger

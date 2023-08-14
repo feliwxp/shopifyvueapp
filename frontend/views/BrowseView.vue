@@ -1,121 +1,119 @@
 <template>
   <main>
-    <Page :fullWidth="true" title="Browse Causes" subtitle="Find your favourite causes">
-      <Card>
-        <ResourceList :resourceName="{ singular: 'cause', plural: 'causes' }">
-          <template #filterControl>
-            <Filters v-model="queryValue" :filters="filters" :appliedFilters="appliedFilters"
-              @query-clear="handleClearQuery" @clear-all="clearAllFilters">
-              <template #filter-selectedCauses>
-                <ChoiceList title="Cause" titleHidden :choices="causeList" v-model="selectedCauses" :allowMultiple="true">
-                </ChoiceList>
-              </template>
-            </Filters>
+    <Page :fullWidth="true" title="Browse NonProfits" subtitle="Find your favourite causes">
+      <div class="q-pa-md">
+        <q-table flat bordered :rows="filteredRows" :columns="columns" :filter="filter" row-key="name">
+
+          <template v-slot:top-right>
+            <div class="q-mr-md">
+              <q-select filled dense debounce="300" v-model="selectedCauses" :options="availableCauses" multiple
+                :display-value="`Select Cause(s)`" />
+            </div>
+            <div>
+              <q-input filled dense debounce="300" v-model="filter" placeholder="Search">
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </div>
           </template>
-          <ResourceItem v-for="item in filteredResourceItems" :key="item.id" :url="item.url" :id="`${item.id}`">
-            <template #media>
-              <Avatar customer size="medium" :name="item.name" />
-            </template>
-            <h3>
-              <TextStyle variation="strong">{{ item.name }}</TextStyle>
-            </h3>
-            <!-- <div>
-              <span v-for="cause in item.causes" :key="cause">
-                <Tag>{{ cause }}</Tag>&nbsp;
-              </span>
-            </div> -->
-            <div><span v-for="cause in item.causes" :key="cause" class="cause-bubble">{{ cause }}</span></div>
-          </ResourceItem>
-        </ResourceList>
-      </Card>
+          <template v-slot:body="props">
+            <q-tr :props="props" @click="onRowClick(props.row)" :style="{ cursor: 'pointer' }">
+
+              <q-td key="name" :props="props">
+                {{ props.row.name }}
+              </q-td>
+              <q-td key="causes" :props="props">
+                <div class="badge-container">
+                  <template v-for="cause in props.row['causes']">
+                    <q-badge class="my-badge" :style="{ backgroundColor: '#f0f0f0', color: '#333' }">
+                      {{ cause }}
+                    </q-badge>
+                  </template>
+                </div>
+              </q-td>
+
+            </q-tr>
+          </template>
+
+        </q-table>
+      </div>
     </Page>
   </main>
 </template>
-  
+
 <script>
+import { ref, onMounted, computed } from 'vue';
 import { api } from "../utils/api";
-import { GET_CHARITIES } from "../utils/queries";
+import { GET_ALL_CHARITIES } from "../utils/queries";
+import { useRouter } from 'vue-router';
 
 export default {
+  setup() {
 
-  data() {
-    return {
-      resourceItems: [],
-      filters: [{
-        key: 'selectedCauses',
-        label: 'Causes',
-        shortcut: true,
-      }],
-      selectedCauses: [],
-      queryValue: null,
+    const columns = [
+      {
+        name: 'name',
+        required: true,
+        label: 'Charity',
+        align: 'left',
+        field: row => row.name,
+        format: val => `${val}`,
+        sortable: true
+      },
+      { name: 'causes', align: 'left', label: 'Cause(s)', field: 'causes', sortable: false },
+    ];
+
+    const rows = ref([]);
+    const selectedCauses = ref([]);
+    const availableCauses = ref([]);
+    const filter = ref('');
+    const loading = ref(true);
+    const router = useRouter();
+
+    onMounted(async () => {
+      // const first = 10;
+      // const after = null;
+
+      // const response = await api.query(GET_CHARITIES, { first, after });
+      // loading everything now first
+      const response = await api.query(GET_ALL_CHARITIES);
+
+      rows.value = response.charities.edges.map(edge => ({
+        id: edge.node.id,
+        url: `charities/${edge.node.id}`,
+        name: edge.node.name,
+        causes: edge.node.causes.edges.map(causeEdge => causeEdge.node.category),
+      }));
+
+      availableCauses.value = Array.from(new Set(rows.value.flatMap(row => row.causes)));
+      loading.value = false;
+    });
+
+    const filteredRows = computed(() => {
+      if (selectedCauses.value.length === 0) {
+        return rows.value;
+      } else {
+        return rows.value.filter(row => row.causes.some(cause => selectedCauses.value.includes(cause)));
+      }
+    });
+
+    const onRowClick = (row) => {
+      router.push(row.url);
     };
-  },
-  async mounted() {
-    const first = 10;
-    const after = null; // You can set the initial value of after here
+    console.log(columns)
 
-    const response = await api.query(GET_CHARITIES, { first, after });
+    return {
+      columns,
+      rows,
+      selectedCauses,
+      availableCauses,
+      filteredRows,
+      filter,
+      loading,
+      onRowClick
 
-    this.resourceItems = response.charities.edges.map(edge => ({
-      id: edge.node.id,
-      url: `charities/${edge.node.id}`,
-      name: edge.node.name,
-      causes: edge.node.causes.edges.map(causeEdge => causeEdge.node.category),
-    }));
-  },
-  computed: {
-    appliedFilters() {
-      const tmpFilters = [];
-      if (this.selectedCauses.length > 0) {
-        const key = 'selectedCauses';
-        tmpFilters.push({
-          key,
-          label: this.disambiguateLabel(key, this.selectedCauses),
-          onRemove: this.handleSelectedCausesRemove,
-        });
-      }
-      return tmpFilters;
-    },
-    causeList() {
-      // Extract unique causes from resourceItems
-      const causes = [...new Set(this.resourceItems.flatMap(item => item.causes))];
-
-      // Transform the causes into the format expected by ChoiceList
-      return causes.map(cause => ({ label: cause, value: cause }));
-    },
-
-    filteredResourceItems() {
-      if (this.selectedCauses.length === 0) {
-        return this.resourceItems; // Return all items if no causes are selected
-      }
-
-      // Filter resourceItems based on selected causes
-      return this.resourceItems.filter(item =>
-        this.selectedCauses.some(selectedCause => item.causes.includes(selectedCause))
-      );
-    },
-  },
-  methods: {
-    handleSelectedCausesRemove() {
-      this.selectedCauses = [];
-    },
-    handleClearQuery() {
-      this.queryValue = '';
-    },
-    clearAllFilters() {
-      this.handleSelectedCausesRemove();
-    },
-    disambiguateLabel(key, value) {
-      switch (key) {
-        case 'selectedCauses':
-          return value.map((val) => `Cause: ${val}`).join(', ');
-        default:
-          return value;
-      }
-    },
-  },
-};
+    }
+  }
+}
 </script>
-
-
-<style></style>

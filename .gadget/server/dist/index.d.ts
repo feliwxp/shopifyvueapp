@@ -8,7 +8,7 @@
 *     \_/  \__,_|\___|\__,_| .__/| .__/
 *                          |_|   |_|
 *
-* Built for environment `"Development"` at version "588"
+* Built for environment `"Development"` at version "1504"
 * Edit this app here: https://"vueapp".gadget.dev/edit
 */
 import { FastifyLoggerInstance } from "fastify";
@@ -29,6 +29,7 @@ export * from "./models/Charity";
 export * from "./models/Donation";
 export * from "./models/Cause";
 export * from "./models/Charitycause";
+export * from "./models/Campaign";
 export * from "./effects";
 /**
  * An instance of the Gadget logger

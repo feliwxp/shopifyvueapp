@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useCharityStore } from '../store';
 
 export default {
